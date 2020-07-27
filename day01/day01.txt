@@ -1,0 +1,23 @@
+행아웃
+gbox3dgel3@gmail.com
+
+- gcc패스추가 -
+내pc(우클릭)-> 속성->고급시스템설정->환경변수->
+path->편집->새로추가->C:\MinGW\bin
+
+mingw 설치(gnu c)
+http://www.mingw.org/
+
+git 클라이언트 설치
+https://git-scm.com/
+
+아나콘다설치(파이썬 안되시는 분들만...)
+https://www.anaconda.com/products/individual#windows
+
+https://github.com/gbox3d/c_lecture
+
+이인규 팀장
+010-4602-1023
+iklee@jica.or.kr
+
+https://meet.google.com/npg-rnzk-ekz
