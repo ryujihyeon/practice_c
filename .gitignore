@@ -7,3 +7,4 @@ out/
 *.so
 *.dll
 *.exe
+*.pyd
