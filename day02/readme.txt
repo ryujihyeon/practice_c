@@ -36,6 +36,29 @@ Python, Js, Lua ....
 실행속도가 느리고 메모리공간을 많이 차지한다.
 개발리 빠르고 쉽다.
 
+깃 메일, 사용자 등록
+ git config --global user.email "xxx@xx.xx"
+ git config --global user.name "xxx"
+
+행아웃
+gbox3dgel3@gmail.com
+
+-깃 폴더 언인스톨(리셋)
+ls -al
+=> .git 폴더가 있는지 확인 
+=> 있으면 => rm -rf .git 
+
+turtle 그래픽
+from turtle import *
+reset()
+forward(이동픽셀)
+left(회전각도)
+right(회전각도)
+
+빌트인 예제 실행 
+python -m turtledemo
+
+
 
 
 
