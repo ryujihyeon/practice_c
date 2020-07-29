@@ -24,9 +24,17 @@ include/ => 폴더안의 내용물을 mingw/include/ 폴더에 카피한다.
 lib/ => 폴더안의 내용물을 mingw/lib/ 폴더에 카피한다.
 
 컴파일 옵션  
+
+기본옵션
 ```sh
- gcc -o test.exe main.cpp -lmingw32 -lSDL2main -lSDL2
+ gcc -o test.exe main.cpp -lmingw32 -lSDL2main -lSDL2 
 ```
+이미지 라이브러리추가
+
+```sh
+gcc -o test.exe main.cpp -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+```
+
 
 bash 쉘에서는 실행이 불가하고 탐색기에서 더블클릭으로 실행한다.  
 
