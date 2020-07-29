@@ -3,6 +3,25 @@
 
 #### window
 
+[sdl 개발킷다운로드](https://www.libsdl.org/download-2.0.php)
+
+SDL2-devel-2.0.12-mingw.tar.gz 파일을 다운로드 받아 압축을 해제한다.  
+압축을 풀어 i686-w64-mingw32 (64bit 버전) 폴더를 찾는다.  
+
+bin/ => dll파일을 windows system폴더에 카피한다. 또는 실행파일 폴더에 카피한다.  
+SDL 응용 프로그램을 실행시키려면 DDL이 필요하다.  
+
+include/ => 폴더안의 내용물을 mingw/include/ 폴더에 카피한다.  
+lib/ => 폴더안의 내용물을 mingw/lib/ 폴더에 카피한다.
+
+컴파일 옵션  
+```sh
+ gcc -o test.exe main.cpp -lmingw32 -lSDL2main -lSDL2
+```
+
+bash 쉘에서는 실행이 불가하고 탐색기에서 더블클릭으로 실행한다.  
+
+
 #### linux
 
 #### mac 
