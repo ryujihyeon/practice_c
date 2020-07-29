@@ -1,3 +1,6 @@
+컴퓨터 과학특강 플레이리스트 
+https://www.youtube.com/playlist?list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo
+
 git reset --hard 박제일련번(HEAD)
 
 정수 = >%d => int
@@ -26,6 +29,33 @@ git reset --hard 박제일련번(HEAD)
 
 2,10,16 진법
 
+{
+ a = 1;
+ b =1;
+}
+
+c = a+b*d/e;
+
+if( 조건 ) { 조건이 참일경우 실행 }
+
+for ( 반복 조건 ) { 반복 조건이 참일경우 계속실행 }
+
+exit :
+..
+..
+goto exit;
+
+// 한줄 주석
+
+/*
+여러줄
+여러줄 
+주석
+*/
+
+
+
+ 
 
 
 
