@@ -16,3 +16,8 @@ print(real)
 print(type(real))
 
 # %%
+
+num_bin = 0b11101001
+print(num_bin)
+print(type(num_bin))
+# %%
