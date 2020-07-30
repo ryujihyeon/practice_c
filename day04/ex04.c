@@ -1,7 +1,5 @@
 #include <stdio.h>
-
-int _sum(int value1,int value2);
-int _mul(int value1,int value2);
+#include "ex04.h"
 
 int main()
 {
