@@ -41,6 +41,22 @@ gcc ex04.c -o ex04.exe -L ./ -lex04
 45841byte => sum,mul
 46236byte => sum
 
+전처리기
+#include
+#define
+
+00 0 0
+01 1 1 
+10 2  -2
+11 3  -1
+
+3+4+5+6
++ 3 4 + 5
+
+3+4-5
++ 3 4 - 5 
+
+
 
 
 
