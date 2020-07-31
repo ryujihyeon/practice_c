@@ -69,8 +69,57 @@ int main(int argc, char *argv[])
                     SDL_Rect _dstRt;
                     _dstRt.x = 0;
                     _dstRt.y = 0;
-                    _dstRt.w = 16;
-                    _dstRt.h = 16;
+                    _dstRt.w = 16 * 4;
+                    _dstRt.h = 16 * 4;
+
+                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
+                }
+                {
+                    SDL_Rect _srcRt;
+                    _srcRt.x = 16 * 1;
+                    _srcRt.y = 16 * 0;
+                    _srcRt.w = 16;
+                    _srcRt.h = 16;
+
+                    SDL_Rect _dstRt;
+                    _dstRt.x = (16*1) * 4;
+                    _dstRt.y = 0;
+                    _dstRt.w = 16 * 4;
+                    _dstRt.h = 16 * 4;
+
+                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
+                }
+
+                {
+                    // x,y = 4,1
+                    SDL_Rect _srcRt;
+                    _srcRt.x = 16 * 4;
+                    _srcRt.y = 16 * 1;
+                    _srcRt.w = 16;
+                    _srcRt.h = 16;
+
+                    SDL_Rect _dstRt;
+                    _dstRt.x = (16*2) * 4;
+                    _dstRt.y = 0;
+                    _dstRt.w = 16 * 4;
+                    _dstRt.h = 16 * 4;
+
+                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
+                }
+
+                {
+                    //3,3
+                    SDL_Rect _srcRt;
+                    _srcRt.x = 16 * 3;
+                    _srcRt.y = 16 * 3;
+                    _srcRt.w = 16;
+                    _srcRt.h = 16;
+
+                    SDL_Rect _dstRt;
+                    _dstRt.x = (16*1) * 4;
+                    _dstRt.y = 0;
+                    _dstRt.w = 16 * 4;
+                    _dstRt.h = 16 * 4;
 
                     SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
                 }

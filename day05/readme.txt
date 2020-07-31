@@ -34,6 +34,8 @@ gcc -o test.exe ex14.c -lmingw32 -lSDL2main -lSDL2
 
 dll => windows/system , copy SDL2.dll
 
+128/240
+
 
 
 
