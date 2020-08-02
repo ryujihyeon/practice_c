@@ -29,6 +29,9 @@ main.asm: main.cpp
 run: msg main
 	time ./main
 
+build_win : 
+	gcc -o ../out/hello.exe main.c -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+
 clean:
 	rm -f main *.o main.asm
 

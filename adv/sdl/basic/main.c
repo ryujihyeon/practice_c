@@ -6,7 +6,8 @@
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
-int main()
+// int main()
+int main(int argc, char* argv[])
 {
     // retutns zero on success else non-zero
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
