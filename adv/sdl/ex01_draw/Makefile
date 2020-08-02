@@ -26,6 +26,10 @@ asm: main.asm
 main.asm: main.cpp
 	${CXX} ${CFLAGS} -S -o main.asm $< ${SDL2FLAGS} ${SDL2IMAGEFLAGS}
 
+
+build_win : 
+	gcc -o ../out/hello.exe main.c -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+
 run: msg main
 	time ./main
 
