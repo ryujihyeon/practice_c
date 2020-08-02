@@ -54,10 +54,6 @@ int main(int argc, char *argv[])
 
     // controls annimation loop
     int close = 0;
-
-    // speed of box
-    // int speed = 300;
-
     // annimation loop
     while (!close)
     {
