@@ -29,16 +29,29 @@ int main(int argc, char *argv[])
 
                 while (SDL_PollEvent(&event))
                 {
-                    if (event.type == SDL_QUIT)
+                    switch (event.type)
                     {
+                    case SDL_QUIT:
                         done = SDL_TRUE;
-                    }
-                    else if (event.type == SDL_MOUSEMOTION)
-                    {
-                        
+                        break;
+                    case SDL_MOUSEMOTION:
                         SDL_GetMouseState(&_mouseX, &_mouseY);
-
-                        // printf("[%5d],[%5d] \r",x,y);
+                        printf("mouse relative [%4d,%4d]\n", event.motion.xrel, event.motion.yrel);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        // SDL_GetMouseState(&_mouseX, &_mouseY);
+                        // SDL_BUTTON_LMASK
+                        printf("mouse down at [%4d,%4d][%2d,%2d][%8d] \n",
+                               event.motion.x, event.motion.y,
+                               event.motion.state & SDL_BUTTON_LMASK , event.motion.state & SDL_BUTTON_RMASK,
+                               event.motion.timestamp);
+                        break;
+                    case SDL_MOUSEBUTTONUP:
+                        printf("mouse up at [%4d,%4d]\n", event.motion.x, event.motion.y);
+                        break;
+                    case SDL_MOUSEWHEEL:
+                        printf("mouse up at [%2d,%2d]\n", event.wheel.x, event.wheel.y);
+                        break;
                     }
                 }
             }

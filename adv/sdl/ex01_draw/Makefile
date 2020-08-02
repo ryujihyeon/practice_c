@@ -28,7 +28,10 @@ main.asm: main.cpp
 
 
 build_win : 
-	gcc -o ../out/hello.exe main.c -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+	gcc -o ../out/game.exe  -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+
+build_mac : main.c
+	gcc -o ../out/game $< ${SDL2FLAGS} ${SDL2IMAGEFLAGS}
 
 run: msg main
 	time ./main

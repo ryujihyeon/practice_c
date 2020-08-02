@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     SDL_Surface *surface;
 
     // please provide a path for your image
-    surface = IMG_Load("../../res/dungeontiles.png");
+    surface = IMG_Load("../res/dungeontiles.png");
 
     // loads image to our graphics hardware memory.
     SDL_Texture *tex = SDL_CreateTextureFromSurface(rend, surface);
