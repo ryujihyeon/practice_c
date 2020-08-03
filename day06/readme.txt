@@ -9,3 +9,9 @@ vs2019 download 검색
 => 커밋
 => git remote add origin (자신의 저장소주소)
 =>  git push -u origin master
+
+루프문
+for(시작 ; 루프를 유지하는 조건;증감연산)
+
+while(루프를 유지하는 조건)
+
