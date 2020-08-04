@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
-void Sum(int data1,int data2);
-extern int result;
+const float _PI = 3.14;
 
 int main(int argc,char *argv[])
 {
@@ -12,8 +11,9 @@ int main(int argc,char *argv[])
     return 1;
   }
 
-  Sum(5,3);
-  printf("%d \n",result);
+  printf("%f \n",_PI);
+  //_PI = 3.4; //읽기 전용 이므로 오류 발생.
+  //printf("%f \n",_PI);
 
   SDL_Quit();
   return 0;

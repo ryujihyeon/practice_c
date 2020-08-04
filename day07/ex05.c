@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
+extern int result2;
 void Sum(int data1,int data2);
-extern int result;
 
 int main(int argc,char *argv[])
 {
@@ -12,8 +12,7 @@ int main(int argc,char *argv[])
     return 1;
   }
 
-  Sum(5,3);
-  printf("%d \n",result);
+  printf("%d \n",result2);
 
   SDL_Quit();
   return 0;

@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
-
-void Sum(int data1,int data2);
-extern int result;
+//함수가 몇번 호출 되는지 카운팅...
+int counter()
+{
+  static int counter=10; //초기값 
+  return ++counter;
+}
 
 int main(int argc,char *argv[])
 {
@@ -12,8 +15,9 @@ int main(int argc,char *argv[])
     return 1;
   }
 
-  Sum(5,3);
-  printf("%d \n",result);
+  printf("%d \n",counter());
+  printf("%d \n",counter());
+  printf("%d \n",counter());
 
   SDL_Quit();
   return 0;
