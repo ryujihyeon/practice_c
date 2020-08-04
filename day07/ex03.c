@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
-int _Sum(int data1,int data2)
+int result; //전역변수
+
+void _Sum(int data1,int data2)
 {
-  int result= data1 + data2;
-  return result;
+  // int result;
+  result= data1 + data2;  
 }
 
 int main(int argc,char *argv[])
@@ -15,7 +17,7 @@ int main(int argc,char *argv[])
     return 1;
   }
 
-  int result = _Sum(5,3);
+  _Sum(5,3);
   printf("%d\n",result);
 
   SDL_Quit();
