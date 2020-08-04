@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
@@ -80,16 +81,21 @@ int main(int argc, char *argv[])
                 break;
             }
         }
-        // clears the screen
+
         //Clear screen
         SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(gRenderer);
 
         //Make self render target
         SDL_SetRenderTarget(gRenderer, mTexture);
-        //Clear screen
-        SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        SDL_RenderClear(gRenderer);
+        // //Clear screen
+        // SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        // SDL_RenderClear(gRenderer);
+
+        //Render red filled quad
+        SDL_Rect fillRect = {rand()%128,rand()%128, 64,64};
+        SDL_SetRenderDrawColor(gRenderer, rand()%255,rand()%255, rand()%255, 0xFF);
+        SDL_RenderFillRect(gRenderer, &fillRect);
 
         //Reset render target
         SDL_SetRenderTarget(gRenderer, NULL);

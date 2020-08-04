@@ -72,3 +72,6 @@ https://github.com/xyproto/sdl2-examples
 
 https://github.com/Twinklebear/TwinklebearDev-Lessons
 
+https://lazyfoo.net/tutorials/SDL/index.php
+
+
