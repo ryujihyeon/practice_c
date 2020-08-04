@@ -21,5 +21,18 @@ char buf5[16];
 char buf6[16];
 //쉼표로 단어를 끊어서 각각 버퍼에 따로 저장하고 출력하세요.
 
+conda create -n myenv_1 python=3.7
+
+vscode 터미널 옵션 
+Default Terminal => Command Prompt
+
+python list
+=> pop, insert, append, count , reverse , sort
+
+
+
+
+
+
 
 
