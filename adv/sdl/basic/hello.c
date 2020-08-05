@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     SDL_Surface *surface;
 
     // please provide a path for your image
-    surface = IMG_Load("./res/grasstiles.png");
+    surface = IMG_Load("../res/grasstiles.png");
 
     if (!surface)
     {
