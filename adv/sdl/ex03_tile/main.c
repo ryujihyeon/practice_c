@@ -6,6 +6,10 @@
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
+
+SDL_Window *g_pWindow;
+SDL_Renderer *g_pRenderer;
+
 int main(int argc, char *argv[])
 {
     // retutns zero on success else non-zero
@@ -13,7 +17,7 @@ int main(int argc, char *argv[])
     {
         printf("error initializing SDL: %s\n", SDL_GetError());
     }
-    SDL_Window *win = SDL_CreateWindow("GAME", // creates a window
+    SDL_Window *g_pWindow = SDL_CreateWindow("GAME", // creates a window
                                        SDL_WINDOWPOS_CENTERED,
                                        SDL_WINDOWPOS_CENTERED,
                                        WINDOW_WIDTH, WINDOW_HEIGHT, 0);
@@ -23,7 +27,7 @@ int main(int argc, char *argv[])
     Uint32 render_flags = SDL_RENDERER_ACCELERATED;
 
     // creates a renderer to render our images
-    SDL_Renderer *rend = SDL_CreateRenderer(win, -1, render_flags);
+    SDL_Renderer *g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, render_flags);
 
     // creates a surface to load an image into the main memory
     SDL_Surface *surface;
@@ -32,7 +36,7 @@ int main(int argc, char *argv[])
     surface = IMG_Load("../res/dungeontiles.png");
 
     // loads image to our graphics hardware memory.
-    SDL_Texture *tex = SDL_CreateTextureFromSurface(rend, surface);
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(g_pRenderer, surface);
 
     // clears main-memory
     SDL_FreeSurface(surface);
@@ -80,74 +84,58 @@ int main(int argc, char *argv[])
                 break;
             }
         }
+
+        // SDL_Renderer *rend =  g_pRenderer;
+
         // clears the screen
-        SDL_RenderClear(rend);
+        SDL_RenderClear(g_pRenderer);
 
         //원본 이미지
-        SDL_RenderCopy(rend, tex, NULL, &dest);
+        SDL_RenderCopy(g_pRenderer, tex, NULL, &dest);
 
         //0,0 첫번째 타일
         {
             SDL_Rect _tmpDstRt;
-            _tmpDstRt.x = 250;
+            _tmpDstRt.x = 320;
             _tmpDstRt.y = 0;
-            _tmpDstRt.w = 48;
-            _tmpDstRt.h = 48;
+            _tmpDstRt.w = 32;
+            _tmpDstRt.h = 32;
             SDL_Rect _tmpSrcRt;
             _tmpSrcRt.x = 0;
             _tmpSrcRt.y = 0;
-            _tmpSrcRt.w = 24;
-            _tmpSrcRt.h = 24;
+            _tmpSrcRt.w = 8;
+            _tmpSrcRt.h = 8;
 
-            SDL_RenderCopy(rend, tex, &_tmpSrcRt, &_tmpDstRt);
+            SDL_RenderCopy(g_pRenderer, tex, &_tmpSrcRt, &_tmpDstRt);
         }
 
-        //1,0 타일 출력
+        //1,0
         {
             SDL_Rect _tmpDstRt;
-            _tmpDstRt.x = 250;
-            _tmpDstRt.y = 48;
-            _tmpDstRt.w = 48;
-            _tmpDstRt.h = 48;
+            _tmpDstRt.x = 32 * 11;
+            _tmpDstRt.y = 0;
+            _tmpDstRt.w = 32;
+            _tmpDstRt.h = 32;
             SDL_Rect _tmpSrcRt;
-            _tmpSrcRt.x = 24;
-            _tmpSrcRt.y = 0;
-            _tmpSrcRt.w = 24;
-            _tmpSrcRt.h = 24;
+            _tmpSrcRt.x = 8*1;
+            _tmpSrcRt.y = 8*0;
+            _tmpSrcRt.w = 8;
+            _tmpSrcRt.h = 8;
 
-            SDL_RenderCopy(rend, tex, &_tmpSrcRt, &_tmpDstRt);
+            SDL_RenderCopy(g_pRenderer, tex, &_tmpSrcRt, &_tmpDstRt);
         }
-        //1,2 타일출력
-        {
-            SDL_Rect _tmpDstRt;
-            _tmpDstRt.x = 250 + 48;
-            _tmpDstRt.y = 48;
-            _tmpDstRt.w = 48;
-            _tmpDstRt.h = 48;
-            SDL_Rect _tmpSrcRt;
-            _tmpSrcRt.x = 24;
-            _tmpSrcRt.y = 48;
-            _tmpSrcRt.w = 24;
-            _tmpSrcRt.h = 24;
-
-            SDL_RenderCopy(rend, tex, &_tmpSrcRt, &_tmpDstRt);
-        }
-
         // triggers the double buffers
         // for multiple rendering
-        SDL_RenderPresent(rend);
-
-        // calculates to 60 fps
-        SDL_Delay(1000 / 60);
+        SDL_RenderPresent(g_pRenderer);
     }
 
     // destroy texture
     SDL_DestroyTexture(tex);
 
     // destroy renderer
-    SDL_DestroyRenderer(rend);
+    SDL_DestroyRenderer(g_pRenderer);
 
     // destroy window
-    SDL_DestroyWindow(win);
+    SDL_DestroyWindow(g_pWindow);
     return 0;
 }
