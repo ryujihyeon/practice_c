@@ -31,6 +31,8 @@ run: msg main
 
 build_win : 
 	gcc -o ../out/hello.exe main.c -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+build_vs :
+	cl /EHsc /MD  main.cpp /Fetest.exe /I F:\C++_Libraries\SDL2\SDL2-2.0.3\include /link /LIBPATH:F:\C++_Libraries\SDL2\SDL2-2.0.3\lib\x86 SDL2.lib SDL2main.lib /SUBSYSTEM:CONSOLE
 
 clean:
 	rm -f main *.o main.asm
