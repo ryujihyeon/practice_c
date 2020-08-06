@@ -16,3 +16,17 @@ void *(?)
 표준 입력함수
 scanf, getchar, gets
 
+"256" => 256
+'2','5','6'
+
+'2' - '0' = 2
+
+2,5,6 => 2* 100 + 5*10 + 6 *1 => 256
+
+<stdlib.h>
+atoi
+atof
+
+<string.h>
+strlen
+
