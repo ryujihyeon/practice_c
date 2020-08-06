@@ -21,3 +21,5 @@ ex11 : ex11.c
 	gcc -Wall -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex12 : ex12.c
 	gcc -Wall -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
+ex13 : ex13.c
+	gcc -Wall -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
