@@ -8,3 +8,5 @@ ex04 : ex04.c
 	gcc -o $@ $^
 ex05 : ex05.c
 	gcc -o $@ $^
+ex06 : ex06.c
+	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2
