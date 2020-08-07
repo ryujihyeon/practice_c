@@ -125,13 +125,16 @@ int main(int argc, char *argv[])
             {
               //save file.map
               char *pFileName = szTokens[1];
-
-              SDL_
-
+              SDL_RWops *rw = SDL_RWFromFile(pFileName, "wb");
+              SDL_RWwrite(rw,g_worldMap_Layer_1,sizeof(Uint16),64);
+              SDL_RWclose(rw);
             }
             else if (strcmp(szTokens[0], "load") == 0)
             {
-              
+              char *pFileName = szTokens[1];
+              SDL_RWops *rw = SDL_RWFromFile(pFileName, "rb");
+              SDL_RWread(rw,g_worldMap_Layer_1,sizeof(Uint16),64);
+              SDL_RWclose(rw);
             }
             printf("\n%s\n", strBuf);
             strBuf[0] = 0x00;
