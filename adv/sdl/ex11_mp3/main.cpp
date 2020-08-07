@@ -8,7 +8,7 @@ int main(int argc, char* args[])
     int result = 0;
     int flags = MIX_INIT_OGG;
 
-    if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         printf("Failed to init SDL\n");
         exit(1);
     }

@@ -69,10 +69,10 @@ bool loadMedia();
 void close();
 
 //The window we'll be rendering to
-SDL_Window* gWindow = NULL;
+SDL_Window* g_pWindow = NULL;
 
 //The window renderer
-SDL_Renderer* gRenderer = NULL;
+SDL_Renderer* g_pRenderer = NULL;
 
 //Globally used font
 TTF_Font *gFont = NULL;
@@ -115,7 +115,7 @@ bool LTexture::loadFromFile(std::string path)
         SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
 
         //Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+        newTexture = SDL_CreateTextureFromSurface(g_pRenderer, loadedSurface);
         if (newTexture == NULL)
         {
             printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -147,7 +147,7 @@ bool LTexture::loadFromRenderedText(std::string textureText, SDL_Color textColor
     if (textSurface != NULL)
     {
         //Create texture from surface pixels
-        mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
+        mTexture = SDL_CreateTextureFromSurface(g_pRenderer, textSurface);
         if (mTexture == NULL)
         {
             printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
@@ -216,7 +216,7 @@ void LTexture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* cen
     }
 
     //Render to screen
-    SDL_RenderCopyEx(gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
+    SDL_RenderCopyEx(g_pRenderer, mTexture, clip, &renderQuad, angle, center, flip);
 }
 
 int LTexture::getWidth()
@@ -249,8 +249,8 @@ bool init()
         }
 
         //Create window
-        gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (gWindow == NULL)
+        g_pWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        if (g_pWindow == NULL)
         {
             printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
             success = false;
@@ -258,8 +258,8 @@ bool init()
         else
         {
             //Create vsynced renderer for window
-            gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-            if (gRenderer == NULL)
+            g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            if (g_pRenderer == NULL)
             {
                 printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
                 success = false;
@@ -267,7 +267,7 @@ bool init()
             else
             {
                 //Initialize renderer color
-                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                SDL_SetRenderDrawColor(g_pRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
                 //Initialize PNG loading
                 int imgFlags = IMG_INIT_PNG;
@@ -327,10 +327,10 @@ void close()
     gFont = NULL;
 
     //Destroy window	
-    SDL_DestroyRenderer(gRenderer);
-    SDL_DestroyWindow(gWindow);
-    gWindow = NULL;
-    gRenderer = NULL;
+    SDL_DestroyRenderer(g_pRenderer);
+    SDL_DestroyWindow(g_pWindow);
+    g_pWindow = NULL;
+    g_pRenderer = NULL;
 
     //Quit SDL subsystems
     TTF_Quit();
@@ -443,15 +443,15 @@ int main(int argc, char* args[])
                 }
 
                 //Clear screen
-                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-                SDL_RenderClear(gRenderer);
+                SDL_SetRenderDrawColor(g_pRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                SDL_RenderClear(g_pRenderer);
 
                 //Render text textures
                 gPromptTextTexture.render((SCREEN_WIDTH - gPromptTextTexture.getWidth()) / 2, 0);
                 gInputTextTexture.render((SCREEN_WIDTH - gInputTextTexture.getWidth()) / 2, gPromptTextTexture.getHeight());
 
                 //Update screen
-                SDL_RenderPresent(gRenderer);
+                SDL_RenderPresent(g_pRenderer);
             }
 
             //Disable text input

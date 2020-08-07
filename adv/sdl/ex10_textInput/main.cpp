@@ -5,7 +5,7 @@
 
 const Uint16 WINDOW_WIDTH = 640;
 const Uint16 WINDOW_HEIGHT = 480;
-SDL_Window *gWindow;
+SDL_Window *g_pWindow;
 
 int main(int argc, char *argv[])
 {
@@ -15,12 +15,12 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    gWindow = SDL_CreateWindow("GAME", // creates a window
+    g_pWindow = SDL_CreateWindow("GAME", // creates a window
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
-    if (!gWindow)
+    if (!g_pWindow)
     {
         printf("error initializing SDL window: %s\n", SDL_GetError());
         return 1;
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    SDL_DestroyWindow(gWindow);
+    SDL_DestroyWindow(g_pWindow);
     SDL_Quit();
     return 0;
 }

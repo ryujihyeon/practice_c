@@ -7,10 +7,10 @@
 #define WINDOW_HEIGHT 480
 
 //The window we'll be rendering to
-SDL_Window *gWindow = NULL;
+SDL_Window *g_pWindow = NULL;
 
 //The window renderer
-SDL_Renderer *gRenderer = NULL;
+SDL_Renderer *g_pRenderer = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     printf("error initializing SDL: %s\n", SDL_GetError());
     return 1;
   }
-  SDL_Window *gWindow = SDL_CreateWindow("GAME", // creates a window
+  SDL_Window *g_pWindow = SDL_CreateWindow("GAME", // creates a window
                                          SDL_WINDOWPOS_CENTERED,
                                          SDL_WINDOWPOS_CENTERED,
                                          WINDOW_WIDTH, WINDOW_HEIGHT, 0);
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
   Uint32 render_flags = SDL_RENDERER_ACCELERATED;
 
   // creates a renderer to render our images
-  gRenderer = SDL_CreateRenderer(gWindow, -1, render_flags);
+  g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, render_flags);
 
   //Initialize PNG loading
   int imgFlags = IMG_INIT_PNG;
@@ -46,8 +46,8 @@ int main(int argc, char *argv[])
   //텍스춰 생성
   //Create uninitialized texture
   int _texH = 256, _texW = 256;
-  SDL_Texture *mTexture = SDL_CreateTexture(gRenderer,
-                                            SDL_GetWindowPixelFormat(gWindow),
+  SDL_Texture *mTexture = SDL_CreateTexture(g_pRenderer,
+                                            SDL_GetWindowPixelFormat(g_pWindow),
                                             SDL_TEXTUREACCESS_STREAMING, _texW, _texH);
   if (mTexture == NULL)
   {
@@ -85,8 +85,8 @@ int main(int argc, char *argv[])
     }
 
     //Clear screen
-    SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderClear(gRenderer);
+    SDL_SetRenderDrawColor(g_pRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(g_pRenderer);
 
     {
       void *mPixels;
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 
       // printf("surface pitch sizt %d \n", mPitch);
 
-      Uint32 format = SDL_GetWindowPixelFormat(gWindow);
+      Uint32 format = SDL_GetWindowPixelFormat(g_pWindow);
       SDL_PixelFormat *mappingFormat = SDL_AllocFormat(format);
 
       Uint32 _redColor = SDL_MapRGBA(mappingFormat,
@@ -118,9 +118,9 @@ int main(int argc, char *argv[])
 
     //Render texture to screen
     SDL_Rect renderQuad = {0, 0, _texW*4, _texH*4};
-    SDL_RenderCopy(gRenderer, mTexture, NULL, &renderQuad);
+    SDL_RenderCopy(g_pRenderer, mTexture, NULL, &renderQuad);
 
-    SDL_RenderPresent(gRenderer);
+    SDL_RenderPresent(g_pRenderer);
 
     // calculates to 60 fps
     // SDL_Delay(1000 / 60);
@@ -128,9 +128,9 @@ int main(int argc, char *argv[])
 
   SDL_DestroyTexture(mTexture);
   // destroy renderer
-  SDL_DestroyRenderer(gRenderer);
+  SDL_DestroyRenderer(g_pRenderer);
 
   // destroy window
-  SDL_DestroyWindow(gWindow);
+  SDL_DestroyWindow(g_pWindow);
   return 0;
 }

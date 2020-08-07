@@ -7,10 +7,10 @@
 #define WINDOW_HEIGHT 480
 
 //The window we'll be rendering to
-SDL_Window *gWindow = NULL;
+SDL_Window *g_pWindow = NULL;
 
 //The window renderer
-SDL_Renderer *gRenderer = NULL;
+SDL_Renderer *g_pRenderer = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
         printf("error initializing SDL: %s\n", SDL_GetError());
         return 1;
     }
-    SDL_Window *gWindow = SDL_CreateWindow("GAME", // creates a window
+    SDL_Window *g_pWindow = SDL_CreateWindow("GAME", // creates a window
                                            SDL_WINDOWPOS_CENTERED,
                                            SDL_WINDOWPOS_CENTERED,
                                            WINDOW_WIDTH, WINDOW_HEIGHT, 0);
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     Uint32 render_flags = SDL_RENDERER_ACCELERATED;
 
     // creates a renderer to render our images
-    gRenderer = SDL_CreateRenderer(gWindow, -1, render_flags);
+    g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, render_flags);
 
     //Initialize PNG loading
     int imgFlags = IMG_INIT_PNG;
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     //텍스춰 생성
     //Create uninitialized texture
     int _texH = 128, _texW = 128;
-    SDL_Texture *mTexture = SDL_CreateTexture(gRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, _texW, _texH);
+    SDL_Texture *mTexture = SDL_CreateTexture(g_pRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, _texW, _texH);
     if (mTexture == NULL)
     {
         printf("Unable to create blank texture! SDL Error: %s\n", SDL_GetError());
@@ -83,30 +83,30 @@ int main(int argc, char *argv[])
         }
 
         //Clear screen
-        SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        SDL_RenderClear(gRenderer);
+        SDL_SetRenderDrawColor(g_pRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(g_pRenderer);
 
         //Make self render target
-        SDL_SetRenderTarget(gRenderer, mTexture);
+        SDL_SetRenderTarget(g_pRenderer, mTexture);
         // //Clear screen
         // SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         // SDL_RenderClear(gRenderer);
 
         //Render red filled quad
         SDL_Rect fillRect = {rand()%128,rand()%128, 64,64};
-        SDL_SetRenderDrawColor(gRenderer, rand()%255,rand()%255, rand()%255, 0xFF);
-        SDL_RenderFillRect(gRenderer, &fillRect);
+        SDL_SetRenderDrawColor(g_pRenderer, rand()%255,rand()%255, rand()%255, 0xFF);
+        SDL_RenderFillRect(g_pRenderer, &fillRect);
 
         //Reset render target
-        SDL_SetRenderTarget(gRenderer, NULL);
+        SDL_SetRenderTarget(g_pRenderer, NULL);
         //Set rendering space and render to screen
         SDL_Rect renderQuad = {0, 0, _texW, _texH};
 
         //Render to screen
-        SDL_RenderCopy(gRenderer, mTexture, NULL, &renderQuad);
+        SDL_RenderCopy(g_pRenderer, mTexture, NULL, &renderQuad);
         // SDL_RenderCopyEx( gRenderer, mTexture, NULL,renderQuad , 0.0, NULL, flip );
 
-        SDL_RenderPresent(gRenderer);
+        SDL_RenderPresent(g_pRenderer);
 
         // calculates to 60 fps
         // SDL_Delay(1000 / 60);
@@ -114,9 +114,9 @@ int main(int argc, char *argv[])
 
     SDL_DestroyTexture(mTexture);
     // destroy renderer
-    SDL_DestroyRenderer(gRenderer);
+    SDL_DestroyRenderer(g_pRenderer);
 
     // destroy window
-    SDL_DestroyWindow(gWindow);
+    SDL_DestroyWindow(g_pWindow);
     return 0;
 }

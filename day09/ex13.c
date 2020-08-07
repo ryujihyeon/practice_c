@@ -3,9 +3,9 @@
 
 const Uint16 WINDOW_WIDTH = 640;
 const Uint16 WINDOW_HEIGHT = 480;
-SDL_Window *gWindow;
+SDL_Window *g_pWindow;
 
-SDL_Renderer *gRenderer = NULL;
+SDL_Renderer *g_pRenderer = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -15,12 +15,12 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  gWindow = SDL_CreateWindow("GAME", // creates a window
+  g_pWindow = SDL_CreateWindow("GAME", // creates a window
                              SDL_WINDOWPOS_CENTERED,
                              SDL_WINDOWPOS_CENTERED,
                              WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
-  if (!gWindow)
+  if (!g_pWindow)
   {
     printf("error initializing SDL window: %s\n", SDL_GetError());
     return 1;
@@ -28,22 +28,22 @@ int main(int argc, char *argv[])
 
   Uint32 render_flags = SDL_RENDERER_ACCELERATED;
   // creates a renderer to render our images
-  gRenderer = SDL_CreateRenderer(gWindow, -1, render_flags);
+  g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, render_flags);
 
   SDL_bool bLoop = SDL_TRUE;
   Sint32 _mouseX = 0;
   Sint32 _mouseY = 0;
   while (bLoop)
   {
-    SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(gRenderer);
+    SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(g_pRenderer);
 
     //render code here
-    SDL_SetRenderDrawColor(gRenderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderDrawLine(gRenderer, _mouseX, 0, _mouseX, 480);
-    SDL_RenderDrawLine(gRenderer, 0, _mouseY, 640, _mouseY);
+    SDL_SetRenderDrawColor(g_pRenderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderDrawLine(g_pRenderer, _mouseX, 0, _mouseX, 480);
+    SDL_RenderDrawLine(g_pRenderer, 0, _mouseY, 640, _mouseY);
 
-    SDL_RenderPresent(gRenderer);
+    SDL_RenderPresent(g_pRenderer);
 
     SDL_Event _event;
     while (SDL_PollEvent(&_event))
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  SDL_DestroyWindow(gWindow);
+  SDL_DestroyWindow(g_pWindow);
   SDL_Quit();
   return 0;
 }

@@ -16,9 +16,9 @@ Uint16 map_layer1[64] = {
 const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 480;
 
-SDL_Window *gWindow;
-SDL_Renderer *gRenderer;
-SDL_Texture *gTexture;
+SDL_Window *g_pWindow;
+SDL_Renderer *g_pRenderer;
+SDL_Texture *g_pTexture;
 
 void _drawDot(int x, int y, Uint8 _r, Uint8 _g, Uint8 _b)
 {
@@ -27,8 +27,8 @@ void _drawDot(int x, int y, Uint8 _r, Uint8 _g, Uint8 _b)
   _dotInfo.y = y * 16;
   _dotInfo.w = 16;
   _dotInfo.h = 16;
-  SDL_SetRenderDrawColor(gRenderer, _r, _g, _b, SDL_ALPHA_OPAQUE);
-  SDL_RenderFillRect(gRenderer, &_dotInfo);
+  SDL_SetRenderDrawColor(g_pRenderer, _r, _g, _b, SDL_ALPHA_OPAQUE);
+  SDL_RenderFillRect(g_pRenderer, &_dotInfo);
 }
 
 void _drawTile(int x, int y, Uint16 _tileIndex)
@@ -45,7 +45,7 @@ void _drawTile(int x, int y, Uint16 _tileIndex)
   _tmpSrcRt.w = 16;
   _tmpSrcRt.h = 16;
 
-  SDL_RenderCopy(gRenderer, gTexture, &_tmpSrcRt, &_tmpDstRt);
+  SDL_RenderCopy(g_pRenderer, g_pTexture, &_tmpSrcRt, &_tmpDstRt);
 }
 
 int main(int argc, char *argv[])
@@ -63,11 +63,11 @@ int main(int argc, char *argv[])
     return 0;
   }
 
-  gWindow = SDL_CreateWindow("GAME", // creates a window
+  g_pWindow = SDL_CreateWindow("GAME", // creates a window
                              SDL_WINDOWPOS_CENTERED,
                              SDL_WINDOWPOS_CENTERED,
                              WINDOW_WIDTH, WINDOW_HEIGHT, 0);
-  if(!gWindow)
+  if(!g_pWindow)
   {
     printf("error initializing SDL: %s\n", SDL_GetError());
     return 1;
@@ -75,8 +75,8 @@ int main(int argc, char *argv[])
 
   Uint32 render_flags = SDL_RENDERER_ACCELERATED;
   // creates a renderer to render our images
-  gRenderer = SDL_CreateRenderer(gWindow, -1, render_flags);
-  if(!gRenderer)
+  g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, render_flags);
+  if(!g_pRenderer)
   {
     printf("error initializing SDL: %s\n", SDL_GetError());
     return 1;
@@ -95,8 +95,8 @@ int main(int argc, char *argv[])
     }
 
     // loads image to our graphics hardware memory.
-    SDL_Texture *tex = SDL_CreateTextureFromSurface(gRenderer, surface);
-    gTexture = tex;
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(g_pRenderer, surface);
+    g_pTexture = tex;
 
     // clears main-memory
     SDL_FreeSurface(surface);
@@ -121,8 +121,8 @@ int main(int argc, char *argv[])
       }
     }
     //출력(rendering)
-    SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(gRenderer);
+    SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(g_pRenderer);
 
     for (int iy = 0; iy < 8; iy++)
     {
@@ -137,10 +137,10 @@ int main(int argc, char *argv[])
       }
     }
 
-    SDL_RenderPresent(gRenderer);
+    SDL_RenderPresent(g_pRenderer);
   }
-  SDL_DestroyRenderer(gRenderer);
-  SDL_DestroyWindow(gWindow);
+  SDL_DestroyRenderer(g_pRenderer);
+  SDL_DestroyWindow(g_pWindow);
   SDL_Quit();
   return 0;
 }

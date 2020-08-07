@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     printf("success SDL INIT\n");
   }
 
-  SDL_Window *gWindow = SDL_CreateWindow("GAME", // creates a window
+  SDL_Window *g_pWindow = SDL_CreateWindow("GAME", // creates a window
                                          SDL_WINDOWPOS_CENTERED,
                                          SDL_WINDOWPOS_CENTERED,
                                          640, 480, 0);
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
   // your graphics hardware and sets flags
   Uint32 render_flags = SDL_RENDERER_ACCELERATED;
   // creates a renderer to render our images
-  SDL_Renderer *gRenderer = SDL_CreateRenderer(gWindow, -1, render_flags);
+  SDL_Renderer *g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, render_flags);
 
   // creates a surface to load an image into the main memory
   SDL_Surface *surface;
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   }
 
   // loads image to our graphics hardware memory.
-  SDL_Texture *tex = SDL_CreateTextureFromSurface(gRenderer, surface);
+  SDL_Texture *tex = SDL_CreateTextureFromSurface(g_pRenderer, surface);
   // clears main-memory
   SDL_FreeSurface(surface);
 
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
   while (bLoop)
   {
     // clears the screen
-    SDL_RenderClear(gRenderer);
+    SDL_RenderClear(g_pRenderer);
 
     for (int iy = 0; iy < 8; iy++)
     {
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
       {
         SDL_Rect src = {16 * 6, 16 * 1, 16, 16};
         SDL_Rect dest = {ix * 64, iy * 64, 64, 64};
-        SDL_RenderCopy(gRenderer, tex, &src, &dest);
+        SDL_RenderCopy(g_pRenderer, tex, &src, &dest);
       }
     }
 
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
       int _src_index_y = _tile_index / 8;
       SDL_Rect src = {16 * _src_index_x, 16 * _src_index_y, 16, 16};
       SDL_Rect dest = {ix * 64, iy * 64, 64, 64};
-      SDL_RenderCopy(gRenderer, tex, &src, &dest);
+      SDL_RenderCopy(g_pRenderer, tex, &src, &dest);
     }
     {
       int ix = 2;
@@ -75,10 +75,10 @@ int main(int argc, char *argv[])
       int _src_index_y = _tile_index / 8;
       SDL_Rect src = {16 * _src_index_x, 16 * _src_index_y, 16, 16};
       SDL_Rect dest = {ix * 64, iy * 64, 64, 64};
-      SDL_RenderCopy(gRenderer, tex, &src, &dest);
+      SDL_RenderCopy(g_pRenderer, tex, &src, &dest);
     }
 
-    SDL_RenderPresent(gRenderer);
+    SDL_RenderPresent(g_pRenderer);
 
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  SDL_DestroyWindow(gWindow);
+  SDL_DestroyWindow(g_pWindow);
 
   return 1;
 }

@@ -6,13 +6,13 @@
 #define WINDOW_HEIGHT 480
 
 //The window we'll be rendering to
-SDL_Window *gWindow = NULL;
+SDL_Window *g_pWindow = NULL;
 
 //The window renderer
-SDL_Renderer *gRenderer = NULL;
+SDL_Renderer *g_pRenderer = NULL;
 
 //The Texture
-SDL_Texture *gTexture = NULL;
+SDL_Texture *g_pTexture = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
   {
     printf("error initializing SDL: %s\n", SDL_GetError());
   }
-  SDL_Window *gWindow = SDL_CreateWindow("GAME", // creates a window
+  SDL_Window *g_pWindow = SDL_CreateWindow("GAME", // creates a window
                                          SDL_WINDOWPOS_CENTERED,
                                          SDL_WINDOWPOS_CENTERED,
                                          WINDOW_WIDTH, WINDOW_HEIGHT, 0);
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
   Uint32 render_flags = SDL_RENDERER_ACCELERATED;
 
   // creates a renderer to render our images
-  gRenderer = SDL_CreateRenderer(gWindow, -1, render_flags);
+  g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, render_flags);
 
   //Initialize PNG loading
   int imgFlags = IMG_INIT_PNG;
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     }
 
     // loads image to our graphics hardware memory.
-    SDL_Texture *tex = SDL_CreateTextureFromSurface(gRenderer, surface);
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(g_pRenderer, surface);
 
     // clears main-memory
     SDL_FreeSurface(surface);
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     SDL_QueryTexture(tex, NULL, NULL, &dest.w, &dest.h);
 
     printf("orignal size %d,%d \n", dest.w, dest.h);
-    gTexture = tex;
+    g_pTexture = tex;
   }
 
   // controls annimation loop
@@ -103,27 +103,27 @@ int main(int argc, char *argv[])
     //rendering process
     {
       //Clear screen
-      SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-      SDL_RenderClear(gRenderer);
+      SDL_SetRenderDrawColor(g_pRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+      SDL_RenderClear(g_pRenderer);
 
       //이미지 출력
       SDL_Rect dest;
       // connects our texture with dest to control position
-      SDL_QueryTexture(gTexture, NULL, NULL, &dest.w, &dest.h);
+      SDL_QueryTexture(g_pTexture, NULL, NULL, &dest.w, &dest.h);
       dest.x = 320;
       dest.y = 200;
-      SDL_RenderCopy(gRenderer, gTexture, NULL, &dest);
+      SDL_RenderCopy(g_pRenderer, g_pTexture, NULL, &dest);
 
-      SDL_RenderPresent(gRenderer);
+      SDL_RenderPresent(g_pRenderer);
     }
   }
 
   //clear objects
-  SDL_DestroyTexture(gTexture);
+  SDL_DestroyTexture(g_pTexture);
   // destroy renderer
-  SDL_DestroyRenderer(gRenderer);
+  SDL_DestroyRenderer(g_pRenderer);
   // destroy window
-  SDL_DestroyWindow(gWindow);
+  SDL_DestroyWindow(g_pWindow);
 
   return 0;
 }

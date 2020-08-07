@@ -7,10 +7,10 @@
 #define WINDOW_HEIGHT 480
 
 //The window we'll be rendering to
-SDL_Window* gWindow = NULL;
+SDL_Window* g_pWindow = NULL;
 
 //The window renderer
-SDL_Renderer* gRenderer = NULL;
+SDL_Renderer* g_pRenderer = NULL;
 
 //Globally used font
 TTF_Font *gFont = NULL;
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     {
         printf("error initializing SDL: %s\n", SDL_GetError());
     }
-    SDL_Window *gWindow = SDL_CreateWindow("GAME", // creates a window
+    SDL_Window *g_pWindow = SDL_CreateWindow("GAME", // creates a window
                                        SDL_WINDOWPOS_CENTERED,
                                        SDL_WINDOWPOS_CENTERED,
                                        WINDOW_WIDTH, WINDOW_HEIGHT, 0);
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     Uint32 render_flags = SDL_RENDERER_ACCELERATED;
 
     // creates a renderer to render our images
-    gRenderer = SDL_CreateRenderer(gWindow, -1, render_flags);
+    g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, render_flags);
 
     //Initialize PNG loading
     int imgFlags = IMG_INIT_PNG;
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
         Uint16 text[]={'H','e','l','l','o',' ','W','o','r','l','d','!',L'한' ,L'글'};
 
         SDL_Surface *textSurface = TTF_RenderUNICODE_Solid(gFont, text, textColor);
-        mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
+        mTexture = SDL_CreateTextureFromSurface(g_pRenderer, textSurface);
         text_height = textSurface->h;
         text_width = textSurface->w;
 
@@ -114,17 +114,17 @@ int main(int argc, char *argv[])
         }
         // clears the screen
         //Clear screen
-        SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        SDL_RenderClear(gRenderer);
+        SDL_SetRenderDrawColor(g_pRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(g_pRenderer);
 
         //Set rendering space and render to screen
         SDL_Rect renderQuad = {100, 100, text_width, text_height};
 
         //Render to screen
-        SDL_RenderCopy(gRenderer, mTexture, NULL, &renderQuad);
+        SDL_RenderCopy(g_pRenderer, mTexture, NULL, &renderQuad);
         // SDL_RenderCopyEx( gRenderer, mTexture, NULL,renderQuad , 0.0, NULL, flip );
 
-        SDL_RenderPresent(gRenderer);
+        SDL_RenderPresent(g_pRenderer);
 
         // calculates to 60 fps
         SDL_Delay(1000 / 60);
@@ -136,9 +136,9 @@ int main(int argc, char *argv[])
 
     SDL_DestroyTexture(mTexture);
     // destroy renderer
-    SDL_DestroyRenderer(gRenderer);
+    SDL_DestroyRenderer(g_pRenderer);
 
     // destroy window
-    SDL_DestroyWindow(gWindow);
+    SDL_DestroyWindow(g_pWindow);
     return 0;
 }

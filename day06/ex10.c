@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     printf("success SDL INIT\n");
   }
 
-  SDL_Window *gWindow = SDL_CreateWindow("GAME", // creates a window
+  SDL_Window *g_pWindow = SDL_CreateWindow("GAME", // creates a window
                                          SDL_WINDOWPOS_CENTERED,
                                          SDL_WINDOWPOS_CENTERED,
                                          640, 480, 0);
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  SDL_DestroyWindow(gWindow);
+  SDL_DestroyWindow(g_pWindow);
 
   return 1;
 }

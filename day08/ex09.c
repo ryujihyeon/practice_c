@@ -9,8 +9,8 @@ int main(int argc,char *argv[])
     printf("error initializing SDL: %s\n", SDL_GetError());
     return 1;
   }
-  SDL_Window *gWindow;
-  gWindow = SDL_CreateWindow("GAME", // creates a window
+  SDL_Window *g_pWindow;
+  g_pWindow = SDL_CreateWindow("GAME", // creates a window
                              SDL_WINDOWPOS_CENTERED,
                              SDL_WINDOWPOS_CENTERED,
                              640, 480, 0);
@@ -26,7 +26,7 @@ int main(int argc,char *argv[])
     printf("%8d \r",rand()%100);
     SDL_Delay(500);
   }
-  SDL_DestroyWindow(gWindow);
+  SDL_DestroyWindow(g_pWindow);
   SDL_Quit();
   return 0;
 }
