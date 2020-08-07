@@ -4,6 +4,7 @@
 #include <string.h>
 
 int doTokenize(char *szBuf, char szBufToken[][32]);
+void putTile(SDL_Renderer *pRenderer, SDL_Texture *pTex,Uint16 _x,Uint16 _y, Uint16 _index);
 
 const Uint16 WINDOW_WIDTH = 640;
 const Uint16 WINDOW_HEIGHT = 480;
@@ -11,9 +12,15 @@ SDL_Window *gWindow;
 SDL_Renderer *g_pRenderer;
 SDL_Texture *g_pTitleTexture;
 
+Uint16 g_worldMap_Layer_1[64];
 
 int main(int argc, char *argv[])
 {
+  for(int i=0;i<64;i++)
+  {
+    g_worldMap_Layer_1[i] = -1;
+  }
+
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
   {
     printf("error initializing SDL: %s\n", SDL_GetError());
@@ -60,24 +67,19 @@ int main(int argc, char *argv[])
 
     // clears the screen
     SDL_SetRenderDrawColor(g_pRenderer,0x00,0x00,0x00,0x00);
-    SDL_RenderClear(g_pRenderer);
-    
-    {
-      Uint16 _index = nTileIndex;
-      SDL_Texture *tex = g_pTitleTexture;
-      SDL_Rect _tmpDstRt;
-      _tmpDstRt.x = 0;
-      _tmpDstRt.y = 0;
-      _tmpDstRt.w = 32;
-      _tmpDstRt.h = 32;
-      SDL_Rect _tmpSrcRt;
-      _tmpSrcRt.x = (_index % 6) * 8;
-      _tmpSrcRt.y = (_index / 6) * 8;
-      _tmpSrcRt.w = 8;
-      _tmpSrcRt.h = 8;
+    SDL_RenderClear(g_pRenderer); 
 
-      SDL_RenderCopy(g_pRenderer, tex, &_tmpSrcRt, &_tmpDstRt);
+    for(int i=0;i<64;i++) 
+    {
+      if(g_worldMap_Layer_1[i] != -1)
+      {
+        putTile(g_pRenderer,g_pTitleTexture,i%8,i/8,g_worldMap_Layer_1[i]);
+      }
     }
+
+    // putTile(g_pRenderer,g_pTitleTexture,1,1,0);
+    // putTile(g_pRenderer,g_pTitleTexture,2,1,1);
+    
     // for multiple rendering
     SDL_RenderPresent(g_pRenderer);
 
@@ -105,12 +107,31 @@ int main(int argc, char *argv[])
             {
               bLoop = SDL_FALSE;
             }
-            else if (strcmp(szTokens[0], "change") == 0)
+            else if (strcmp(szTokens[0], "setTile") == 0)
             {
+              //setTile x y index
+              int _x = SDL_atoi(szTokens[1]);
+              int _y = SDL_atoi(szTokens[2]);
+              int _index = SDL_atoi(szTokens[3]);
 
-              printf("\n %d %s %s \n",_numToken,szTokens[0],szTokens[1]);
+              g_worldMap_Layer_1[(_y*8) + _x] = _index;
 
-              //nTileIndex++;
+              // printf("\n %d %s %s \n",_numToken,szTokens[0],szTokens[1]);
+              // Uint16 _ti =  SDL_atoi(szTokens[1]);
+              // nTileIndex = _ti;
+              // //nTileIndex++;
+            }
+            else if (strcmp(szTokens[0], "save") == 0)
+            {
+              //save file.map
+              char *pFileName = szTokens[1];
+
+              SDL_
+
+            }
+            else if (strcmp(szTokens[0], "load") == 0)
+            {
+              
             }
             printf("\n%s\n", strBuf);
             strBuf[0] = 0x00;

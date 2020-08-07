@@ -14,5 +14,5 @@ ex08 : ex08.c
 	gcc -o $@ $^
 ex09 : ex09.c
 	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2
-ex10 : ex10.c ../engine/parser.c
+ex10 : ex10.c ../engine/parser.c ../engine/tile.c
 	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
