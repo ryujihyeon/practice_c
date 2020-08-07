@@ -57,8 +57,7 @@ int main(int argc, char *argv[])
             printf("\n%s\n", strBuf);
             strBuf[0] = 0x00;
             SDL_StopTextInput();
-            nInputFSM = 0;
-            
+            nInputFSM = 0;            
           }
         }
         // else if(_event.key.keysym.sym == SDLK_SPACE)
