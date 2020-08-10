@@ -1,12 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+#include <string.h>
 
 const Uint16 WINDOW_WIDTH = 640;
 const Uint16 WINDOW_HEIGHT = 480;
 SDL_Window *g_pWindow;
-
 SDL_Renderer *g_pRenderer;
+
+typedef struct
+{
+  SDL_Rect m_rect;
+  SDL_Color m_color;
+} _S_MyRect;
+
+int doTokenize(char *szBuf, char szBufToken[8][32]);
 
 int main(int argc, char *argv[])
 {
@@ -27,6 +36,20 @@ int main(int argc, char *argv[])
     return 1;
   }
 
+  //Initialize SDL_mixer
+  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+  {
+    printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+    return 1;
+  }
+
+  Mix_Music *music = Mix_LoadMUS("../adv/sdl/res/nj4_2.ogg");
+
+  if (!music)
+  {
+    printf("Failed to load music SDL_mixer Error: %s\n", Mix_GetError());
+  }
+
   g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, SDL_RENDERER_ACCELERATED);
 
   SDL_bool bLoop = SDL_TRUE;
@@ -34,7 +57,12 @@ int main(int argc, char *argv[])
   SDL_Rect _rects[32];
   SDL_Color _rect_colors[32];
 
+  // _S_MyRect _myrect[32];
+
   Uint16 _rect_count = 0;
+
+  Sint32 nInputFSM = 0;
+
   while (bLoop)
   {
     SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 1);
@@ -50,42 +78,74 @@ int main(int argc, char *argv[])
 
     SDL_RenderPresent(g_pRenderer);
 
+    static char strBuf[32] = {
+        0,
+    };
     SDL_Event _event;
     while (SDL_PollEvent(&_event))
     {
       switch (_event.type)
       {
+      case SDL_TEXTINPUT:
+      {
+        strcat(strBuf, _event.text.text);
+      }
+      break;
       case SDL_KEYDOWN:
-        printf("%d \n", _event.key.keysym.scancode);
-        if (_event.key.keysym.sym == SDLK_r)
+        // printf("%d \n", _event.key.keysym.scancode);        
+        if (_event.key.keysym.sym == SDLK_RETURN)
         {
-          SDL_Rect *pRect = &_rects[_rect_count];
-
-          pRect->x = rand() % WINDOW_WIDTH;
-          pRect->y = rand() % WINDOW_HEIGHT;
-          pRect->w = rand() % 200;
-          pRect->h = rand() % 200;
-
-          SDL_Color *pColor = &_rect_colors[_rect_count];
-          pColor->r = rand() % 255;
-          pColor->g = rand() % 255;
-          pColor->b = rand() % 255;
-          pColor->a = rand() % 255;
-
-          _rect_count++;
-          if (_rect_count >= 32)
+          if (nInputFSM == 0)
           {
-            _rect_count = 0;
+            printf("input msg : ");
+            SDL_StartTextInput();
+            nInputFSM = 1;
           }
+          else if (nInputFSM == 1)
+          {
+            //입력완료
+            static char szTokens[8][32];
+            int _numToken = doTokenize(strBuf, szTokens);
 
-          printf("add \n");
+            if (!strcmp(szTokens[0], "quit"))
+            {
+              bLoop = SDL_FALSE;
+            }
+            else if (!strcmp(szTokens[0], "dr"))
+            {
+              //dr x y w h r g b a
+              SDL_Rect _rt = {atoi(szTokens[1]), atoi(szTokens[2]),
+                              atoi(szTokens[3]), atoi(szTokens[4])};
+              Uint8 r = atoi(szTokens[5]);
+              Uint8 g = atoi(szTokens[6]);
+              Uint8 b = atoi(szTokens[7]);
+              Uint8 a = atoi(szTokens[8]);
+
+              SDL_Rect *pRect = &_rects[_rect_count];
+              *pRect = _rt;
+              SDL_Color *pColor = &_rect_colors[_rect_count];
+              pColor->r = r;
+              pColor->g = g;
+              pColor->b = b;
+              pColor->a = a;
+              _rect_count++;
+
+              nInputFSM = 0;
+              SDL_StopTextInput();
+            }
+            else if (!strcmp(szTokens[0], "pl"))
+            {
+              Mix_PlayMusic(music, -1);              
+            }
+          }
+          
+          break;
+        case SDL_QUIT:
+          bLoop = SDL_FALSE;
+          break;
+        default:
+          break;
         }
-        break;
-      case SDL_QUIT:
-        bLoop = SDL_FALSE;
-        break;
-      default:
-        break;
       }
     }
   }

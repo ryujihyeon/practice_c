@@ -18,6 +18,6 @@ ex09 : ex09.c
 	gcc -o $@ $^
 ex10 : ex10.c
 	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2
-ex11 : ex11.c
-	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2
+ex11 : ex11.c ../engine/parser.c
+	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer
 
