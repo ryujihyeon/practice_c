@@ -19,6 +19,9 @@ int main()
   MyData _p = {1,2,3,4,5};
   printf("%d %d %d %d %d\n",a,b,c,*ptr,_p[0]);
 
+  // char *p[5];
+  // char (*p)[5];
+
   MyData *p;
   p = (MyData *)malloc(sizeof(MyData));
   (*p)[0] = 3;
