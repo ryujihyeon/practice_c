@@ -22,3 +22,5 @@ ex11 : ex11.c
 	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2 
 ex12 : ex12.c 
 	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2 
+ex13 : ex13.c ../engine/tile.c
+	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
