@@ -56,6 +56,19 @@ int main()
     p->p_next = NULL;
   }
 
+  {
+    NODE *p = phead;
+    while (p->p_next != NULL)
+    {
+      p = p->p_next;
+    }
+    p->p_next = (NODE *)malloc(sizeof(NODE));    
+    p = p->p_next;
+    
+    p->number = 16;    
+    p->p_next = NULL;
+  }
+
 //순회 
   {
     NODE *p = phead;
@@ -66,6 +79,64 @@ int main()
       p = p->p_next;
     }
   }
+
+  {
+    NODE *p = phead;
+    NODE *_p_pre;
+    NODE *_p_next;
+
+    while (p != NULL)
+    {      
+      _p_next = p->p_next;
+      if(p->number == 13) {
+        printf("remove : %d \n",p->number);
+        _p_pre->p_next = _p_next;
+        free(p);
+        break;
+      }
+      _p_pre = p;
+      p = p->p_next;
+    }
+  }
+
+//pop
+  {
+    NODE *p = phead;
+    NODE *_p_pre = NULL;
+//get tail
+    while (p->p_next != NULL)
+    {
+      _p_pre = p;
+      p = p->p_next;
+    }
+    printf("pop : %d \n",p->number);
+    free(p);
+    _p_pre->p_next = NULL;
+
+  }
+
+  //del
+  {
+    NODE *p = phead;
+    NODE *_p_next = p->p_next;
+    printf("del : %d \n",p->number);
+    free(p);
+    phead = _p_next;
+  }
+
+
+  {
+    NODE *p = phead;
+
+    while (p != NULL)
+    {
+      printf("free %d \n",p->number);
+      NODE *_p_next = p->p_next;
+      free(p);      
+      p = _p_next;
+    }
+  }
+  
 
   return 0;
 }
