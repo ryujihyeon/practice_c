@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
       case SDL_TEXTINPUT:
       {
         strcat(strInputBuf, _event.text.text);
-        printf("%s \r", strInputBuf);
+        printf("%s\r", strInputBuf);
       }
       break;
 
