@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include "../engine/util.h"
 
 const Uint16 WINDOW_WIDTH = 640;
 const Uint16 WINDOW_HEIGHT = 480;
@@ -55,22 +56,31 @@ int main(int argc, char *argv[])
     {
       switch (_event.type)
       {
-      case SDL_MOUSEMOTION:
+      case SDL_MOUSEBUTTONDOWN:
       {
         int _mx = _event.motion.x;
         int _my = _event.motion.y;
 
-        if ((testRect.x < _mx && testRect.y < _my) &&
-            ((testRect.x + testRect.w) > _mx && (testRect.y + testRect.h) > _my))
-        {
-          printf("%4d%4d%2d\r", _event.motion.x, _event.motion.y, 1);
-          bCheckHitRect = SDL_TRUE;
-        }
-        else
-        {
-          printf("%4d%4d%2d\r", _event.motion.x, _event.motion.y, 0);
-          bCheckHitRect = SDL_FALSE;
-        }
+      }
+        break;
+      case SDL_MOUSEMOTION:
+      {
+        bCheckHitRect = checkPointInRect(&testRect,_event.motion.x,_event.motion.y);        
+
+        // int _mx = _event.motion.x;
+        // int _my = _event.motion.y;       
+
+        // if ((testRect.x < _mx && testRect.y < _my) &&
+        //     ((testRect.x + testRect.w) > _mx && (testRect.y + testRect.h) > _my))
+        // {
+        //   printf("%4d%4d%2d\r", _event.motion.x, _event.motion.y, 1);
+        //   bCheckHitRect = SDL_TRUE;
+        // }
+        // else
+        // {
+        //   printf("%4d%4d%2d\r", _event.motion.x, _event.motion.y, 0);
+        //   bCheckHitRect = SDL_FALSE;
+        // }
       }
       break;
       case SDL_KEYDOWN:
