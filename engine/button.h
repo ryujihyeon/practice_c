@@ -5,8 +5,9 @@ typedef struct _S_BUTTON
 {
   Uint16 m_nID;
   SDL_Rect m_Rect;
-  // Uint16 m_nFSM;
-  SDL_bool bCheckHitRect;
+  Uint16 m_nFSM;
+  SDL_Color m_fillColor;
+  // SDL_bool bCheckHitRect;
 
 } S_BUTTON;
 
