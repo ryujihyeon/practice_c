@@ -3,6 +3,7 @@
 
 typedef struct _S_BUTTON
 {
+  SDL_bool m_bVisible;
   Uint16 m_nID;
   SDL_Rect m_Rect;
   Uint16 m_nFSM;
