@@ -3,7 +3,10 @@
 #include "button.h"
 #include "util.h"
 
-void Button_Init(S_BUTTON *pBtn, int x, int y, int w, int h, Uint16 btnID)
+// extern SDL_bool bLoop;
+
+void Button_Init(S_BUTTON *pBtn, int x, int y, int w, int h, Uint16 btnID,
+  void (*pCallbackBtnPush)(struct _S_BUTTON *))
 {
   // pBtn->bCheckHitRect = SDL_FALSE;
   pBtn->m_bVisible = SDL_TRUE;
@@ -13,8 +16,11 @@ void Button_Init(S_BUTTON *pBtn, int x, int y, int w, int h, Uint16 btnID)
   pBtn->m_Rect.w = w;
   pBtn->m_Rect.h = h;
 
+  pBtn->m_fillColor.r = 0xff;
+  pBtn->m_fillColor.g = 0;
+  pBtn->m_fillColor.b = 0;  
   pBtn->m_fillColor.a = 0;
-
+  pBtn->m_pCallbackBtnPush = pCallbackBtnPush;
   pBtn->m_nID = btnID;
 }
 
@@ -46,9 +52,6 @@ void Button_DoEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
     case SDL_MOUSEMOTION:
       if (checkPointInRect(&pBtn->m_Rect, pEvt->motion.x, pEvt->motion.y))
       {
-        pBtn->m_fillColor.r = 255;
-        pBtn->m_fillColor.g = 0;
-        pBtn->m_fillColor.b = 0;
         pBtn->m_fillColor.a = 0x80;
         pBtn->m_nFSM = 1;
       }
@@ -61,20 +64,18 @@ void Button_DoEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
     {
     case SDL_MOUSEMOTION:
       if (!checkPointInRect(&pBtn->m_Rect, pEvt->motion.x, pEvt->motion.y))
-      {
-        pBtn->m_fillColor.r = 0;
-        pBtn->m_fillColor.g = 0;
-        pBtn->m_fillColor.b = 0;
+      {        
         pBtn->m_fillColor.a = 0;
-
         pBtn->m_nFSM = 0;
       }
       break;
     case SDL_MOUSEBUTTONDOWN:
       if (checkPointInRect(&pBtn->m_Rect, pEvt->motion.x, pEvt->motion.y))
       {
-        pBtn->m_bVisible = SDL_FALSE;
-        printf("button ID: %d\n", pBtn->m_nID);
+        if(pBtn->m_pCallbackBtnPush != NULL)
+          {
+            pBtn->m_pCallbackBtnPush(pBtn);
+          }
       }
       break;
     }
