@@ -4,9 +4,8 @@
 #include "util.h"
 
 // extern SDL_bool bLoop;
-
 void Button_Init(S_BUTTON *pBtn, int x, int y, int w, int h, Uint16 btnID,
-  void (*pCallbackBtnPush)(struct _S_BUTTON *))
+                 void (*pCallbackBtnPush)(struct _S_BUTTON *))
 {
   // pBtn->bCheckHitRect = SDL_FALSE;
   pBtn->m_bVisible = SDL_TRUE;
@@ -18,10 +17,39 @@ void Button_Init(S_BUTTON *pBtn, int x, int y, int w, int h, Uint16 btnID,
 
   pBtn->m_fillColor.r = 0xff;
   pBtn->m_fillColor.g = 0;
-  pBtn->m_fillColor.b = 0;  
+  pBtn->m_fillColor.b = 0;
   pBtn->m_fillColor.a = 0;
   pBtn->m_pCallbackBtnPush = pCallbackBtnPush;
   pBtn->m_nID = btnID;
+}
+
+S_BUTTON *createButton(int x, int y, int w, int h, Uint16 btnID,
+                       void (*pCallbackBtnPush)(struct _S_BUTTON *))
+{
+  S_BUTTON *pBtn;
+  pBtn = SDL_malloc(sizeof(S_BUTTON));
+  pBtn->m_Rect.x = x;
+  pBtn->m_Rect.y = y;
+  pBtn->m_Rect.w = w;
+  pBtn->m_Rect.h = h;
+
+  pBtn->m_nID = btnID;
+  pBtn->m_nFSM = 0;
+  pBtn->m_bVisible = SDL_TRUE;
+  
+  pBtn->m_fillColor.r = 0xff;
+  pBtn->m_fillColor.g = 0xff;
+  pBtn->m_fillColor.b = 0xff;
+  pBtn->m_fillColor.a = 0xff;
+
+  pBtn->m_pCallbackBtnPush = pCallbackBtnPush;
+
+  return pBtn;
+}
+
+void destoryButton(S_BUTTON *pBtn)
+{
+  SDL_free(pBtn);
 }
 
 void Button_Render(S_BUTTON *pBtn, SDL_Renderer *pRender)
@@ -64,7 +92,7 @@ void Button_DoEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
     {
     case SDL_MOUSEMOTION:
       if (!checkPointInRect(&pBtn->m_Rect, pEvt->motion.x, pEvt->motion.y))
-      {        
+      {
         pBtn->m_fillColor.a = 0;
         pBtn->m_nFSM = 0;
       }
@@ -72,10 +100,10 @@ void Button_DoEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
     case SDL_MOUSEBUTTONDOWN:
       if (checkPointInRect(&pBtn->m_Rect, pEvt->motion.x, pEvt->motion.y))
       {
-        if(pBtn->m_pCallbackBtnPush != NULL)
-          {
-            pBtn->m_pCallbackBtnPush(pBtn);
-          }
+        if (pBtn->m_pCallbackBtnPush != NULL)
+        {
+          pBtn->m_pCallbackBtnPush(pBtn);
+        }
       }
       break;
     }
