@@ -27,8 +27,8 @@ main.asm: main.cpp
 	${CXX} ${CFLAGS} -S -o main.asm $< ${SDL2FLAGS} ${SDL2IMAGEFLAGS}
 
 
-build_win : 
-	gcc -o ../out/game.exe  -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+build_win : main.c
+	gcc -o ../out/game.exe $^  -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 
 build_mac : main.c
 	gcc -o ../out/game $< ${SDL2FLAGS} ${SDL2IMAGEFLAGS}
