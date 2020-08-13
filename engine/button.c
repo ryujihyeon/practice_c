@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "button.h"
 #include "util.h"
 
@@ -24,6 +26,9 @@ void Button_Init(S_BUTTON *pBtn, int x, int y, int w, int h, Uint16 btnID,
 }
 
 S_BUTTON *createButton(int x, int y, int w, int h, Uint16 btnID,
+                       const Uint16 *text,
+                       TTF_Font *pFont,
+                       SDL_Renderer *pRenderer,
                        void (*pCallbackBtnPush)(struct _S_BUTTON *))
 {
   S_BUTTON *pBtn;
@@ -36,13 +41,28 @@ S_BUTTON *createButton(int x, int y, int w, int h, Uint16 btnID,
   pBtn->m_nID = btnID;
   pBtn->m_nFSM = 0;
   pBtn->m_bVisible = SDL_TRUE;
-  
+
   pBtn->m_fillColor.r = 0xff;
   pBtn->m_fillColor.g = 0xff;
   pBtn->m_fillColor.b = 0xff;
   pBtn->m_fillColor.a = 0xff;
 
   pBtn->m_pCallbackBtnPush = pCallbackBtnPush;
+
+  //라벨생성
+  {
+    SDL_Color _whiteColor = {0xff, 0xff, 0xff, 0xff};
+    SDL_Color _blackColor = {0, 0, 0, 0xff};
+    SDL_Surface *textSurface = TTF_RenderUNICODE(pFont, text, _whiteColor, _blackColor);
+
+    pBtn->m_pLable = SDL_CreateTextureFromSurface(pRenderer,textSurface);
+    pBtn->m_rectLabel.x=0;
+    pBtn->m_rectLabel.y=0;
+    pBtn->m_rectLabel.w = textSurface->w;
+    pBtn->m_rectLabel.h = textSurface->h;
+
+    SDL_FreeSurface(textSurface);
+  }
 
   return pBtn;
 }
