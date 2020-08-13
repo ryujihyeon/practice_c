@@ -53,12 +53,11 @@ int main(int argc, char *argv[])
   //LOAD font file
   g_pFont = TTF_OpenFont("../adv/sdl/res/nmf.ttf", 28);
 
-  Uint16 _text[] = {L'나', L'가',L'기',0x0000};
+  // Uint16 _text[] = {L'나', L'가',L'기',0x0000};
 
-  g_pExitButton = createButton(WINDOW_WIDTH / 2 - 60, WINDOW_HEIGHT / 2 - 16, 120, 32, 1,
-                               _text,
+  g_pExitButton = createButton(g_pRenderer,WINDOW_WIDTH / 2 - 60, WINDOW_HEIGHT / 2 - 16, 120, 32, 1,
+                               L"나가기",
                                g_pFont,
-                               g_pRenderer,
                                callbackExitButtonPush);
 
   //game loop
@@ -69,7 +68,8 @@ int main(int argc, char *argv[])
     SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 0xff);
     SDL_RenderClear(g_pRenderer);
 
-    Button_Render(g_pExitButton, g_pRenderer);
+    g_pExitButton->m_fpRender(g_pExitButton,g_pRenderer);
+    // Button_Render(g_pExitButton, g_pRenderer);
 
     SDL_RenderPresent(g_pRenderer);
 
@@ -77,7 +77,8 @@ int main(int argc, char *argv[])
     SDL_Event _event;
     while (SDL_PollEvent(&_event))
     {
-      Button_DoEvent(g_pExitButton, &_event);
+      g_pExitButton->m_fpDoEvent(g_pExitButton, &_event);
+      // Button_DoEvent(g_pExitButton, &_event);
       switch (_event.type)
       {
       case SDL_KEYDOWN:
@@ -92,7 +93,8 @@ int main(int argc, char *argv[])
     }
   }
   
-  destoryButton(g_pExitButton);
+  g_pExitButton->m_fpDestory(g_pExitButton);
+  // destoryButton(g_pExitButton);
   TTF_CloseFont(g_pFont);
 
   SDL_DestroyRenderer(g_pRenderer);

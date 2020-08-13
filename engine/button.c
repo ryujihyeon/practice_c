@@ -141,6 +141,7 @@ S_BUTTON *createButton(SDL_Renderer *pRenderer,
 
   pBtn->m_fpRender = Button_Render;
   pBtn->m_fpDestory = destoryButton;
+  pBtn->m_fpDoEvent = Button_DoEvent;
   
   return pBtn;
 }

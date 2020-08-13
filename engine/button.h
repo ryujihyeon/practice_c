@@ -8,6 +8,7 @@ typedef struct _S_BUTTON
   Uint16 m_nID;
   void (*m_fpDestory)(struct _S_BUTTON *pObj);
   void (*m_fpRender)(struct _S_BUTTON *pObj, SDL_Renderer *pRender);
+  void (*m_fpDoEvent)();
 
   SDL_Texture *m_pLable;
   SDL_Rect m_rectLabel;
