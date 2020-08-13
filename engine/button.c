@@ -69,6 +69,7 @@ S_BUTTON *createButton(int x, int y, int w, int h, Uint16 btnID,
 
 void destoryButton(S_BUTTON *pBtn)
 {
+  SDL_DestroyTexture(pBtn->m_pLable);
   SDL_free(pBtn);
 }
 
