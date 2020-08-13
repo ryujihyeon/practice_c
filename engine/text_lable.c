@@ -5,14 +5,17 @@
 
 #include "text_lable.h"
 
-void _destory(S_TextLable *pObj)
+void _destory(void *_pObj)
 {
+  S_TextLable *pObj = _pObj;
+
   SDL_DestroyTexture(pObj->m_pLableTxture);
   SDL_free(pObj);
 }
 
-void _render(S_TextLable *pObj, SDL_Renderer *pRender)
+void _render(void *_pObj, SDL_Renderer *pRender)
 {
+  S_TextLable *pObj = _pObj;
   SDL_SetRenderDrawBlendMode(pRender, SDL_BLENDMODE_BLEND);
 
   SDL_RenderCopy(pRender,pObj->m_pLableTxture,NULL,&pObj->m_Rect);

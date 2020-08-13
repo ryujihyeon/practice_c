@@ -3,6 +3,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 
+#include "../engine/ui_base.h"
 #include "../engine/text_lable.h"
 #include "../engine/button.h"
 
@@ -78,16 +79,16 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < 3; i++)
     {
-      int nType = ((S_TextLable *)pUiObjs[i])->m_nType;
-      if( nType == 1) {
-        ((S_TextLable *)pUiObjs[i])->m_fpRender(pUiObjs[i],g_pRenderer);
-      }
-      else if(nType == 2)
-      {
-        ((S_BUTTON *)pUiObjs[i])->m_fpRender(pUiObjs[i],g_pRenderer);
-      }
+      ((S_UIBase *)pUiObjs[i])->m_fpRender(pUiObjs[i],g_pRenderer);
 
-      
+      // int nType = ((S_TextLable *)pUiObjs[i])->m_nType;
+      // if( nType == 1) {
+      //   ((S_TextLable *)pUiObjs[i])->m_fpRender(pUiObjs[i],g_pRenderer);
+      // }
+      // else if(nType == 2)
+      // {
+      //   ((S_BUTTON *)pUiObjs[i])->m_fpRender(pUiObjs[i],g_pRenderer);
+      // }
       //TextLable_render(ptxLable[i], g_pRenderer);
     }
 
@@ -114,17 +115,18 @@ int main(int argc, char *argv[])
 
   for (int i = 0; i < 3; i++)
   {
-    int nType = ((S_TextLable *)pUiObjs[i])->m_nType;
+    ((S_UIBase *)pUiObjs[i])->m_fpDestory(pUiObjs[i]);
+    // int nType = ((S_TextLable *)pUiObjs[i])->m_nType;
 
-    if(nType==1)
-    {
-      ((S_TextLable *)pUiObjs[i])->m_fpDestory(pUiObjs[i]);
+    // if(nType==1)
+    // {
+    //   ((S_TextLable *)pUiObjs[i])->m_fpDestory(pUiObjs[i]);
 
-    }
-    else if(nType==2)
-    {
-      ((S_BUTTON *)pUiObjs[i])->m_fpDestory(pUiObjs[i]);
-    }
+    // }
+    // else if(nType==2)
+    // {
+    //   ((S_BUTTON *)pUiObjs[i])->m_fpDestory(pUiObjs[i]);
+    // }
     //TextLable_destory(ptxLable[i]);
   }
 

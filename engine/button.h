@@ -6,6 +6,8 @@ typedef struct _S_BUTTON
   Uint16 m_nType;
   SDL_bool m_bVisible;
   Uint16 m_nID;
+  void (*m_fpDestory)(struct _S_BUTTON *pObj);
+  void (*m_fpRender)(struct _S_BUTTON *pObj, SDL_Renderer *pRender);
 
   SDL_Texture *m_pLable;
   SDL_Rect m_rectLabel;
@@ -16,8 +18,7 @@ typedef struct _S_BUTTON
   void (*m_pCallbackBtnPush)(struct _S_BUTTON *);
   // SDL_bool bCheckHitRect;
 
-  void (*m_fpDestory)(struct _S_BUTTON *pObj);
-  void (*m_fpRender)(struct _S_BUTTON *pObj, SDL_Renderer *pRender);
+  
 
 } S_BUTTON;
 
