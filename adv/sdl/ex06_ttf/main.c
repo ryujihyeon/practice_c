@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 
     {
         SDL_Color textColor = {0, 0, 0};
-        Uint16 text[]={'H','e','l','l','o',' ','W','o','r','l','d','!',L'한' ,L'글'};
+        Uint16 text[]={'H','e','l','l','o',' ','W','o','r','l','d','!',L'한' ,L'글',0x00};
 
         SDL_Surface *textSurface = TTF_RenderUNICODE_Solid(gFont, text, textColor);
         mTexture = SDL_CreateTextureFromSurface(g_pRenderer, textSurface);

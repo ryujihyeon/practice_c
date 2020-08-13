@@ -42,9 +42,9 @@ S_BUTTON *createButton(int x, int y, int w, int h, Uint16 btnID,
   pBtn->m_nFSM = 0;
   pBtn->m_bVisible = SDL_TRUE;
 
-  pBtn->m_fillColor.r = 0xff;
-  pBtn->m_fillColor.g = 0xff;
-  pBtn->m_fillColor.b = 0xff;
+  pBtn->m_fillColor.r = 0x80;
+  pBtn->m_fillColor.g = 0x80;
+  pBtn->m_fillColor.b = 0x80;
   pBtn->m_fillColor.a = 0xff;
 
   pBtn->m_pCallbackBtnPush = pCallbackBtnPush;
@@ -52,8 +52,8 @@ S_BUTTON *createButton(int x, int y, int w, int h, Uint16 btnID,
   //라벨생성
   {
     SDL_Color _whiteColor = {0xff, 0xff, 0xff, 0xff};
-    SDL_Color _blackColor = {0, 0, 0, 0xff};
-    SDL_Surface *textSurface = TTF_RenderUNICODE(pFont, text, _whiteColor, _blackColor);
+    SDL_Color _blackColor = {0, 0, 0, 0x00};
+    SDL_Surface *textSurface = TTF_RenderUNICODE_Solid(pFont, text, _whiteColor);
 
     pBtn->m_pLable = SDL_CreateTextureFromSurface(pRenderer,textSurface);
     pBtn->m_rectLabel.x=0;
@@ -86,6 +86,13 @@ void Button_Render(S_BUTTON *pBtn, SDL_Renderer *pRender)
                            pBtn->m_fillColor.a);
     SDL_RenderFillRect(pRender, &pBtn->m_Rect);
 
+    pBtn->m_rectLabel.x = pBtn->m_Rect.x+2;
+    pBtn->m_rectLabel.y = pBtn->m_Rect.y+2;
+    pBtn->m_rectLabel.w = pBtn->m_Rect.w -4;
+    pBtn->m_rectLabel.h = pBtn->m_Rect.h -4;
+
+    SDL_RenderCopy(pRender,pBtn->m_pLable,NULL,&pBtn->m_rectLabel);
+
     //반투명 모드 비 활성화
     SDL_SetRenderDrawBlendMode(pRender, SDL_BLENDMODE_NONE);
   }
@@ -113,9 +120,9 @@ void Button_DoEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
     case SDL_MOUSEMOTION:
       if (!checkPointInRect(&pBtn->m_Rect, pEvt->motion.x, pEvt->motion.y))
       {
-        pBtn->m_fillColor.a = 0;
+        pBtn->m_fillColor.a = 0xff;
         pBtn->m_nFSM = 0;
-      }
+      }      
       break;
     case SDL_MOUSEBUTTONDOWN:
       if (checkPointInRect(&pBtn->m_Rect, pEvt->motion.x, pEvt->motion.y))

@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
   //LOAD font file
   g_pFont = TTF_OpenFont("../adv/sdl/res/nmf.ttf", 28);
 
-  Uint16 _text[] = {L'나', L'가'};
+  Uint16 _text[] = {L'나', L'가',L'기',0x0000};
 
   g_pExitButton = createButton(WINDOW_WIDTH / 2 - 60, WINDOW_HEIGHT / 2 - 16, 120, 32, 1,
                                _text,

@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     SDL_Color _whiteColor = {0xff,0xff,0xff,0xff};
     SDL_Color _blackColor = {0,0,0,0xff};
 
-    Uint16 text[] = {L'안',L'녕'};
+    Uint16 text[] = {L'안',L'녕',0x0000};
     
     //SDL_Surface *textSurface = TTF_RenderText(g_pFont, "안녕하세요.", _whiteColor,_blackColor);
     SDL_Surface *textSurface = TTF_RenderUNICODE(g_pFont,text, _whiteColor,_blackColor);
