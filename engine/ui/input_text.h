@@ -17,6 +17,8 @@ typedef struct _input_text
   SDL_Color m_fgColor;
   SDL_Color m_bgColor; 
 
+  char m_szBuf[256];
+
 } S_INPUT_TEXT;
 
  S_INPUT_TEXT *myui_createInputText(SDL_Renderer *pRenderer,

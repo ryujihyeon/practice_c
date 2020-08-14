@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
   SDL_Color _fg = {0xff,0xff,0xff,0xff};
   SDL_Color _bg = {0x80,0x80,0x80,0xff};
-  g_pInputText = myui_createInputText(g_pRenderer,0,60,196,32,3,g_pFont,
+  g_pInputText = myui_createInputText(g_pRenderer,0,96,196,32,3,g_pFont,
   _fg,
   _bg
   );
@@ -79,10 +79,12 @@ int main(int argc, char *argv[])
     while (SDL_PollEvent(&_event))
     {
       g_pBtnExit->m_base.m_fpDoEvent(g_pBtnExit,&_event);
+      g_pInputText->m_base.m_fpDoEvent(g_pInputText,&_event);
+
       switch (_event.type)
       {
       case SDL_KEYDOWN:
-        printf("%d \n", _event.key.keysym.scancode);
+        // printf("%d \n", _event.key.keysym.scancode);
         break;
       case SDL_QUIT:
         bLoop = SDL_FALSE;
