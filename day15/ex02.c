@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
   g_pLabelMainmenu = createLable(g_pRenderer, 0, 0, 1,
                                  L"메인메뉴",
                                  g_pFont);
-  
+  g_pBtnExit = createButton(g_pRenderer,0,30,64,32,2,L"종료",g_pFont,NULL);
                   
 
   SDL_bool bLoop = SDL_TRUE;
@@ -58,11 +58,16 @@ int main(int argc, char *argv[])
     //라벨 랜더링 ..
     g_pLabelMainmenu->m_fpRender(g_pLabelMainmenu,g_pRenderer);
 
+    //버튼 랜더링
+    g_pBtnExit->m_fpRender(g_pBtnExit,g_pRenderer);
+
     SDL_RenderPresent(g_pRenderer);
 
     SDL_Event _event;
     while (SDL_PollEvent(&_event))
     {
+      g_pBtnExit->m_fpDoEvent(g_pBtnExit,&_event);
+
       switch (_event.type)
       {
       case SDL_KEYDOWN:
@@ -77,6 +82,7 @@ int main(int argc, char *argv[])
     }
   }
 
+  g_pBtnExit->m_fpDestory(g_pBtnExit);
   g_pLabelMainmenu->m_fpDestory(g_pLabelMainmenu);
 
   TTF_CloseFont(g_pFont);
