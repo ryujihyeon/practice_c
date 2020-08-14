@@ -24,7 +24,7 @@ typedef struct text_lable
 } S_TextLable;
 
 S_TextLable *createLable(SDL_Renderer *pRenderer,
-                          int x, int y,  Uint16 btnID,
+                          int x, int y,  Uint16 nID,
                           const Uint16 *text,
                           TTF_Font *pFont);
 // void TextLable_destory(S_TextLable *pObj);
