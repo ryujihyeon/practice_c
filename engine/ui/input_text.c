@@ -23,13 +23,37 @@ static void _render(void *_pObj, SDL_Renderer *pRender)
   //...
   S_INPUT_TEXT *pObj = _pObj;
 
+  //배경
   SDL_SetRenderDrawColor(pRender,
                          pObj->m_bgColor.r,
                          pObj->m_bgColor.g,
                          pObj->m_bgColor.b,
                          pObj->m_bgColor.a);
-
   SDL_RenderFillRect(pRender, &pObj->m_Rect);
+
+  //전경 텍스트
+  if(strlen(pObj->m_szBuf) > 0)
+  {
+    // SDL_Color _whiteColor = {0xff, 0xff, 0xff, 0xff};
+    // SDL_Color _blackColor = {0, 0, 0, 0x00};
+    SDL_Surface *textSurface = TTF_RenderText_Solid(pObj->m_pFont,
+                                                       pObj->m_szBuf,
+                                                       pObj->m_fgColor);
+
+    pObj->m_pTextTxture = SDL_CreateTextureFromSurface(pRender, textSurface);    
+    
+    pObj->m_textSize.x = textSurface->w;
+    pObj->m_textSize.y = textSurface->h;
+    SDL_FreeSurface(textSurface);
+  }
+
+  if(pObj->m_pTextTxture)
+  {
+    SDL_Rect _dstRect = {pObj->m_Rect.x,pObj->m_Rect.y,pObj->m_textSize.x,pObj->m_textSize.y};
+    SDL_RenderCopy(pRender,pObj->m_pTextTxture,NULL,&_dstRect);
+    SDL_DestroyTexture(pObj->m_pTextTxture);
+    pObj->m_pTextTxture = NULL;
+  }
 }
 
 static void _doEvent(void *_pObj, SDL_Event *evt)
