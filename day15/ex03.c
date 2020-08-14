@@ -50,6 +50,8 @@ int main(int argc, char *argv[])
   g_pRenderer = SDL_CreateRenderer(g_pWindow,-1,SDL_RENDERER_ACCELERATED);
   TTF_Init();
   g_pFont = TTF_OpenFont("../adv/sdl/res/nmf.ttf",28);
+
+  
   g_pLabelMainmenu = myui_createLable(g_pRenderer, 0, 0, 1,
                                  L"메인메뉴",
                                  g_pFont);
