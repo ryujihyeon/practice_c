@@ -8,6 +8,8 @@ const Uint16 WINDOW_HEIGHT = 480;
 SDL_Window *g_pWindow;
 SDL_Renderer *g_pRenderer;
 
+SDL_Texture *g_pTexture;
+
 int main(int argc, char *argv[])
 {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -28,21 +30,55 @@ int main(int argc, char *argv[])
   }
 
   g_pRenderer = SDL_CreateRenderer(g_pWindow,-1,SDL_RENDERER_ACCELERATED);
-  
 
+  {
+    SDL_Surface *pSurf = IMG_Load("../res/tiny16/characters.png");
+    g_pTexture = SDL_CreateTextureFromSurface(g_pRenderer,pSurf);
+    SDL_FreeSurface(pSurf);
+  }
+
+  SDL_Point _position = {0,0};
+  
   SDL_bool bLoop = SDL_TRUE;
   while (bLoop)
   {
-    
+    SDL_SetRenderDrawColor(g_pRenderer,0x00,0x00,0x00,0xff);
+    SDL_RenderClear(g_pRenderer);
+
+    SDL_Rect srcRt = {16,0,16,16};
+    SDL_Rect dstRt = {_position.x*32,_position.y*32,32,32};
+    SDL_RenderCopy(g_pRenderer,g_pTexture,&srcRt,&dstRt);
+
+    SDL_RenderPresent(g_pRenderer);
 
     SDL_Event _event;
     while (SDL_PollEvent(&_event))
     {
-    
       switch (_event.type)
       {
       case SDL_KEYDOWN:
+      //82 up,81 down,right 79 ,left 80
         // printf("%d \n", _event.key.keysym.scancode);
+        if(_event.key.keysym.scancode == 79) 
+        {
+          _position.x += 1;
+        }
+        else if(_event.key.keysym.scancode == 80) 
+        {
+          _position.x -= 1;
+        }
+        else if(_event.key.keysym.scancode == 81) 
+        {
+          _position.y += 1;
+        }
+        else if(_event.key.keysym.scancode == 82) 
+        {
+          _position.y -= 1;
+        }
+
+        printf("%4d%4d\r",_position.x,_position.y);
+
+        
         break;
       case SDL_QUIT:
         bLoop = SDL_FALSE;
