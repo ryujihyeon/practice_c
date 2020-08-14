@@ -6,7 +6,7 @@
 #include "ui_base.h"
 #include "button.h"
 
-void _destory(void *pObj)
+static void _destory(void *pObj)
 {
   S_BUTTON *pBtn = pObj;
 
@@ -14,7 +14,7 @@ void _destory(void *pObj)
   SDL_free(pBtn);
 }
 
-void _render(void *pObj, SDL_Renderer *pRender)
+static void _render(void *pObj, SDL_Renderer *pRender)
 {
   S_BUTTON *pBtn=pObj;
 
@@ -42,7 +42,7 @@ void _render(void *pObj, SDL_Renderer *pRender)
   }
 }
 
-void _doEvent(void *pObj, SDL_Event *pEvt)
+static void _doEvent(void *pObj, SDL_Event *pEvt)
 {
   S_BUTTON *pBtn = pObj;
 

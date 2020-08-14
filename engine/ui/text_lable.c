@@ -6,7 +6,8 @@
 #include "ui_base.h"
 #include "text_lable.h"
 
-void _destory(void *_pObj)
+
+static void _destory(void *_pObj)
 {
   S_TextLable *pObj = _pObj;
 
@@ -14,7 +15,7 @@ void _destory(void *_pObj)
   SDL_free(pObj);
 }
 
-void _render(void *_pObj, SDL_Renderer *pRender)
+static void _render(void *_pObj, SDL_Renderer *pRender)
 {
   S_TextLable *pObj = _pObj;
   SDL_SetRenderDrawBlendMode(pRender, SDL_BLENDMODE_BLEND);

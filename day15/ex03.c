@@ -5,6 +5,7 @@
 
 #include "../engine/ui/ui_base.h"
 #include "../engine/ui/text_lable.h"
+#include "../engine/ui/button.h"
 
 const Uint16 WINDOW_WIDTH = 640;
 const Uint16 WINDOW_HEIGHT = 480;
@@ -13,6 +14,17 @@ SDL_Window *g_pWindow;
 SDL_Renderer *g_pRenderer;
 TTF_Font *g_pFont;
 S_TextLable *g_pLabelMainmenu;
+S_BUTTON *g_pBtnExit;
+
+
+void onPushExitButton(S_BUTTON *pBtn)
+{
+  //...종료 버튼 처리 
+  SDL_Event _evt;
+  _evt.type = SDL_QUIT;
+  SDL_PushEvent(&_evt);
+  
+}
 
 int main(int argc, char *argv[])
 {
@@ -40,18 +52,23 @@ int main(int argc, char *argv[])
                                  L"메인메뉴",
                                  g_pFont);
 
+  g_pBtnExit = myui_createButton(g_pRenderer,0,30,96,48,2,L"종료",g_pFont,onPushExitButton);
+
   SDL_bool bLoop = SDL_TRUE;
   while (bLoop)
   {
     SDL_SetRenderDrawColor(g_pRenderer,0x00,0x00,0xff,0xff);
     SDL_RenderClear(g_pRenderer);
+
     g_pLabelMainmenu->m_base.m_fpRender(g_pLabelMainmenu,g_pRenderer);
+    g_pBtnExit->m_base.m_fpRender(g_pBtnExit,g_pRenderer);
 
     SDL_RenderPresent(g_pRenderer);
 
     SDL_Event _event;
     while (SDL_PollEvent(&_event))
     {
+      g_pBtnExit->m_base.m_fpDoEvent(g_pBtnExit,&_event);
       switch (_event.type)
       {
       case SDL_KEYDOWN:
@@ -66,6 +83,7 @@ int main(int argc, char *argv[])
     }
   }
 
+  g_pBtnExit->m_base.m_fpDestory(g_pBtnExit);
   g_pLabelMainmenu->m_base.m_fpDestory(g_pLabelMainmenu);
   TTF_CloseFont(g_pFont);
   SDL_DestroyRenderer(g_pRenderer);
