@@ -6,6 +6,7 @@
 #include "../engine/ui/ui_base.h"
 #include "../engine/ui/text_lable.h"
 #include "../engine/ui/button.h"
+#include "../engine/ui/input_text.h"
 
 const Uint16 WINDOW_WIDTH = 640;
 const Uint16 WINDOW_HEIGHT = 480;
@@ -13,9 +14,10 @@ const Uint16 WINDOW_HEIGHT = 480;
 SDL_Window *g_pWindow;
 SDL_Renderer *g_pRenderer;
 TTF_Font *g_pFont;
+
 S_TextLable *g_pLabelMainmenu;
 S_BUTTON *g_pBtnExit;
-
+S_INPUT_TEXT *g_pInputText;
 
 void onPushExitButton(S_BUTTON *pBtn)
 {
@@ -54,6 +56,13 @@ int main(int argc, char *argv[])
 
   g_pBtnExit = myui_createButton(g_pRenderer,0,30,96,48,2,L"종료",g_pFont,onPushExitButton);
 
+  SDL_Color _fg = {0xff,0xff,0xff,0xff};
+  SDL_Color _bg = {0x80,0x80,0x80,0xff};
+  g_pInputText = myui_createInputText(g_pRenderer,0,60,196,32,3,g_pFont,
+  _fg,
+  _bg
+  );
+
   SDL_bool bLoop = SDL_TRUE;
   while (bLoop)
   {
@@ -62,6 +71,7 @@ int main(int argc, char *argv[])
 
     g_pLabelMainmenu->m_base.m_fpRender(g_pLabelMainmenu,g_pRenderer);
     g_pBtnExit->m_base.m_fpRender(g_pBtnExit,g_pRenderer);
+    g_pInputText->m_base.m_fpRender(g_pInputText,g_pRenderer);
 
     SDL_RenderPresent(g_pRenderer);
 
