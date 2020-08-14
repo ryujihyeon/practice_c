@@ -6,14 +6,18 @@
 #include "ui_base.h"
 #include "button.h"
 
-void _destory(S_BUTTON *pBtn)
+void _destory(void *pObj)
 {
+  S_BUTTON *pBtn = pObj;
+
   SDL_DestroyTexture(pBtn->m_pLable);
   SDL_free(pBtn);
 }
 
-void _render(S_BUTTON *pBtn, SDL_Renderer *pRender)
+void _render(void *pObj, SDL_Renderer *pRender)
 {
+  S_BUTTON *pBtn=pObj;
+
   if (pBtn->m_base.m_bVisible)
   {
     //반투명 모드 활성화
@@ -38,8 +42,10 @@ void _render(S_BUTTON *pBtn, SDL_Renderer *pRender)
   }
 }
 
-void _doEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
+void _doEvent(void *pObj, SDL_Event *pEvt)
 {
+  S_BUTTON *pBtn = pObj;
+
   SDL_Point mousePos;
   mousePos.x = pEvt->motion.x;
   mousePos.y = pEvt->motion.y;
@@ -49,7 +55,7 @@ void _doEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
     switch (pEvt->type)
     {
     case SDL_MOUSEMOTION:
-      if (SDL_PointInRect(&pBtn->m_Rect,&mousePos))
+      if (SDL_PointInRect(&mousePos,&pBtn->m_Rect))
       {
         pBtn->m_fillColor.a = 0x80;
         pBtn->m_nFSM = 1;
@@ -62,14 +68,14 @@ void _doEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
     switch (pEvt->type)
     {
     case SDL_MOUSEMOTION:
-      if (!SDL_PointInRect(&pBtn->m_Rect,&mousePos) )
+      if (!SDL_PointInRect(&mousePos,&pBtn->m_Rect) )
       {
         pBtn->m_fillColor.a = 0xff;
         pBtn->m_nFSM = 0;
       }
       break;
     case SDL_MOUSEBUTTONDOWN:
-      if (SDL_PointInRect(&pBtn->m_Rect,&mousePos))
+      if (SDL_PointInRect(&mousePos,&pBtn->m_Rect))
       {
         if (pBtn->m_pCallbackBtnPush != NULL)
         {

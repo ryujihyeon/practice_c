@@ -8,7 +8,11 @@
 
 const Uint16 WINDOW_WIDTH = 640;
 const Uint16 WINDOW_HEIGHT = 480;
+
 SDL_Window *g_pWindow;
+SDL_Renderer *g_pRenderer;
+TTF_Font *g_pFont;
+S_TextLable *g_pLabelMainmenu;
 
 int main(int argc, char *argv[])
 {
@@ -29,9 +33,22 @@ int main(int argc, char *argv[])
     return 1;
   }
 
+  g_pRenderer = SDL_CreateRenderer(g_pWindow,-1,SDL_RENDERER_ACCELERATED);
+  TTF_Init();
+  g_pFont = TTF_OpenFont("../adv/sdl/res/nmf.ttf",28);
+  g_pLabelMainmenu = myui_createLable(g_pRenderer, 0, 0, 1,
+                                 L"메인메뉴",
+                                 g_pFont);
+
   SDL_bool bLoop = SDL_TRUE;
   while (bLoop)
   {
+    SDL_SetRenderDrawColor(g_pRenderer,0x00,0x00,0xff,0xff);
+    SDL_RenderClear(g_pRenderer);
+    g_pLabelMainmenu->m_base.m_fpRender(g_pLabelMainmenu,g_pRenderer);
+
+    SDL_RenderPresent(g_pRenderer);
+
     SDL_Event _event;
     while (SDL_PollEvent(&_event))
     {
@@ -48,6 +65,10 @@ int main(int argc, char *argv[])
       }
     }
   }
+
+  g_pLabelMainmenu->m_base.m_fpDestory(g_pLabelMainmenu);
+  TTF_CloseFont(g_pFont);
+  SDL_DestroyRenderer(g_pRenderer);
 
   SDL_DestroyWindow(g_pWindow);
   SDL_Quit();
