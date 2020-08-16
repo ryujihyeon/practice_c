@@ -9,8 +9,8 @@ typedef struct __s_button_
   SDL_Rect m_rtArea;
 
   Uint16 m_nFSM;
-  SDL_Color *m_pFillColor;
-  SDL_Color *m_pBorderColor;
+  SDL_Color m_fillColor;
+  SDL_Color m_borderColor;
 
   void (*m_pCallbackBtnPush)(void *);
 

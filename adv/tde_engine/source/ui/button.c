@@ -30,10 +30,10 @@ static void _render(void *pObj, SDL_Renderer *pRender)
     SDL_SetRenderDrawColor(pRender, 255, 255, 255, 255);
     SDL_RenderDrawRect(pRender, &pBtn->m_rtArea);
 
-    SDL_SetRenderDrawColor(pRender, pBtn->m_pFillColor->r, pBtn->m_pFillColor->g, pBtn->m_pFillColor->b,pBtn->m_pFillColor->a);
+    SDL_SetRenderDrawColor(pRender, pBtn->m_fillColor.r, pBtn->m_fillColor.g, pBtn->m_fillColor.b,pBtn->m_fillColor.a);
     SDL_RenderFillRect(pRender, &pBtn->m_rtArea);
 
-    SDL_SetRenderDrawColor(pRender, pBtn->m_pBorderColor->r, pBtn->m_pBorderColor->g, pBtn->m_pBorderColor->b,pBtn->m_pFillColor->a);
+    SDL_SetRenderDrawColor(pRender, pBtn->m_borderColor.r, pBtn->m_borderColor.g, pBtn->m_borderColor.b,pBtn->m_fillColor.a);
     SDL_RenderDrawRect(pRender, &pBtn->m_rtArea);
 
 
@@ -57,7 +57,7 @@ static void _doEvent(void *pObj, SDL_Event *pEvt)
     case SDL_MOUSEMOTION:
       if (SDL_PointInRect(&mousePos, &pBtn->m_rtArea))
       {
-        pBtn->m_pFillColor->a = 0x80;
+        pBtn->m_fillColor.a = 0x80;
         pBtn->m_nFSM = 1;
       }
       break;
@@ -70,7 +70,7 @@ static void _doEvent(void *pObj, SDL_Event *pEvt)
     case SDL_MOUSEMOTION:
       if (!SDL_PointInRect(&mousePos, &pBtn->m_rtArea))
       {
-        pBtn->m_pFillColor->a = 0xff;
+        pBtn->m_fillColor.a = 0xff;
         pBtn->m_nFSM = 0;
       }
       break;
@@ -111,12 +111,12 @@ void *tDE_ui_createButton(SDL_Renderer *pRenderer,
 
   pBtn->m_nFSM = 0;
 
-  if(pFillColor) pBtn->m_pFillColor = pFillColor;
-  else pBtn->m_pFillColor = &_defaultFillColor;
+  if(pFillColor) pBtn->m_fillColor = *pFillColor;
+  else pBtn->m_fillColor = _defaultFillColor;
   
 
-  if(pBorderColor) pBtn->m_pBorderColor = pBorderColor;
-  else pBtn->m_pBorderColor = &_defaultBorderColor;
+  if(pBorderColor) pBtn->m_borderColor = *pBorderColor;
+  else pBtn->m_borderColor = _defaultBorderColor;
 
   pBtn->m_pCallbackBtnPush = pCallbackBtnPush;
 

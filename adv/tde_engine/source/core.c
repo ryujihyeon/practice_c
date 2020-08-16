@@ -4,7 +4,7 @@
 
 #include "core.h"
 
-tDE_S_Core *tDE_setup_1(const char *szTitle,int WINDOW_WIDTH,int WINDOW_HEIGHT,Uint32 flags )
+tDE_S_Core *tDE_setup_1(const char *szTitle, int WINDOW_WIDTH, int WINDOW_HEIGHT, Uint32 flags)
 {
     tDE_S_Core *pCore = SDL_malloc(sizeof(tDE_S_Core));
     // retutns zero on success else non-zero
@@ -14,11 +14,10 @@ tDE_S_Core *tDE_setup_1(const char *szTitle,int WINDOW_WIDTH,int WINDOW_HEIGHT,U
         return NULL;
     }
     pCore->m_pWin = SDL_CreateWindow(szTitle, // creates a window
-                                             SDL_WINDOWPOS_CENTERED,
-                                             SDL_WINDOWPOS_CENTERED,
-                                             WINDOW_WIDTH,WINDOW_HEIGHT, flags);
+                                     SDL_WINDOWPOS_CENTERED,
+                                     SDL_WINDOWPOS_CENTERED,
+                                     WINDOW_WIDTH, WINDOW_HEIGHT, flags);
 
-    
     // creates a renderer to render our images
     pCore->m_pRender = SDL_CreateRenderer(pCore->m_pWin, -1, SDL_RENDERER_ACCELERATED);
 
@@ -50,12 +49,10 @@ tDE_S_Core *tDE_setup_1(const char *szTitle,int WINDOW_WIDTH,int WINDOW_HEIGHT,U
         return NULL;
     }
 
-    printf("engine start in : %8d\n",time(NULL));
+    printf("engine start in : %8d\n", time(NULL));
     srand(time(NULL));
 
-
     return pCore;
-
 }
 
 void tDE_closeCore(tDE_S_Core *pCore)
@@ -65,5 +62,29 @@ void tDE_closeCore(tDE_S_Core *pCore)
     SDL_DestroyWindow(pCore->m_pWin);
 
     SDL_free(pCore);
+}
 
+SDL_Texture *tDE_util_loadTexture(tDE_S_Core *pCore, const char *filename)
+{
+    // SDL_RenderPresent(renderer);
+    SDL_Surface *surface;
+    // please provide a path for your image
+    surface = IMG_Load(filename);
+
+    if (surface == 0)
+    {
+        printf("error load file \n");
+        return NULL;
+    }
+    else
+    {
+        printf("success load file \n");
+    }
+
+    // loads image to our graphics hardware memory.
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(pCore->m_pRender, surface);
+
+    // clears main-memory
+    SDL_FreeSurface(surface);
+    return tex;
 }
