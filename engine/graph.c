@@ -34,7 +34,7 @@ Uint32 tDE_graph_add_node(tDE_S_Node *pNode,tDE_S_Node *pParent)
   {
     tDE_S_Node *_pChild = pParent->m_pChild;
     pParent->m_pChild = pNode;
-    pNode->m_pParent = pParent;
+    pNode->m_pParent = pParent; 
     pNode->m_pNext = _pChild;
     _pChild->m_pPrev = pNode;
   }
@@ -43,7 +43,36 @@ Uint32 tDE_graph_add_node(tDE_S_Node *pNode,tDE_S_Node *pParent)
 
 void tDE_graph_Traverse(tDE_S_Node *pRoot,void (*callback)(void *node,void *ptr),void *param)
 {
-
+  if(!pRoot)
+  {
+    pRoot = g_pRootNode;
+  }
+  //자손찾기 
+  if(pRoot->m_pChild)
+  {
+    tDE_graph_Traverse(pRoot->m_pChild,callback,param);
+    //형제들 순회
+    tDE_S_Node *_phead = pRoot->m_pChild;
+    while (_phead)
+    {
+      void *_next = _phead->m_pNext;
+      callback(_phead,param);
+      _phead = _next;
+    }
+  }
+  return;
 }
+
+tDE_S_Node *tDE_graph_FindNodeById(tDE_S_Node *pRoot,Uint32 nId)
+{
+  if(!pRoot)
+  {
+    pRoot = g_pRootNode;
+  }
+
+  
+}
+
+
 
 

@@ -15,6 +15,8 @@ typedef struct __graph_node
 void tDE_graph_init();
 void tDE_graph_close();
 Uint32 tDE_graph_add_node(tDE_S_Node *pNode,tDE_S_Node *pParent);
+void tDE_graph_Traverse(tDE_S_Node *pRoot,void (*callback)(void *node,void *ptr),void *param);
+tDE_S_Node *tDE_graph_FindNodeById(tDE_S_Node *pRoot,Uint32 nId);
 
 
 
