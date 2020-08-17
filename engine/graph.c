@@ -41,4 +41,9 @@ Uint32 tDE_graph_add_node(tDE_S_Node *pNode,tDE_S_Node *pParent)
   return pNode->m_nID;
 }
 
+void tDE_graph_Traverse(tDE_S_Node *pRoot,void (*callback)(void *node,void *ptr),void *param)
+{
+
+}
+
 
