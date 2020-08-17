@@ -10,6 +10,16 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
+typedef struct __core
+{
+  SDL_Window *m_pWin;
+  SDL_Renderer *m_pRender;
+  TTF_Font *m_pDefaultFont;
+  Uint16 m_ScreenWidth;
+  Uint16 m_ScreenHeight;
+} tDE_S_Core;
+
+
 typedef struct _tde_s_base_ {
   
   Uint16 m_nType;
