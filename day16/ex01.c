@@ -27,9 +27,13 @@ int main(int argc, char *argv[])
   tDE_graph_Traverse(NULL, callBackTraverse, NULL);
 
   tDE_S_Node *pFindNode = tDE_graph_FindNodeById(NULL,10002);
-  if(pFindNode) {
-    printf("%d\n",pFindNode->m_nID);
+  if(pFindNode) {    
+    printf("find id :[%d]\n",pFindNode->m_nID);
   }
+  tDE_graph_remove_node(pFindNode); //지우기 
+
+  printf("--------------------------------------------\n");
+  tDE_graph_Traverse(NULL, callBackTraverse, NULL);
   
 
   // SDL_free(pNode2);
