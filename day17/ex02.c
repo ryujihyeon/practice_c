@@ -43,6 +43,32 @@ int main(int argc, char *argv[])
                      &g_sheetDataAssets[sheet_index].m_area, &_destRt);
     }
 
+    {
+      SDL_Color _whiteColor = {0xff, 0xff, 0xff, 0xff};
+
+      //g_sheetDataAssets[g_select_SheetIndex].szName
+      tDE_S_SheetData *pSheet = &g_sheetDataAssets[g_select_SheetIndex];
+      char szInfo[256];
+      sprintf(szInfo, "%s,%4d%4d%4d%4d",
+              pSheet->szName,
+              pSheet->m_area.x,
+              pSheet->m_area.y,
+              pSheet->m_area.w,
+              pSheet->m_area.h);
+
+      SDL_Surface *textSurface = TTF_RenderText_Solid(pEngineCore->m_pDefaultFont,
+                                                      szInfo,
+                                                      _whiteColor);
+      SDL_Texture *pTex = SDL_CreateTextureFromSurface(pEngineCore->m_pRender, textSurface);
+
+      SDL_Rect _dstRect = {0, 0, textSurface->w, textSurface->h};
+
+      SDL_RenderCopy(pEngineCore->m_pRender, pTex, NULL, &_dstRect);
+
+      SDL_FreeSurface(textSurface);
+      SDL_DestroyTexture(pTex);
+    }
+
     SDL_RenderPresent(pEngineCore->m_pRender);
 
     SDL_Event event;
@@ -51,7 +77,7 @@ int main(int argc, char *argv[])
       switch (event.type)
       {
       case SDL_KEYDOWN:
-        printf("%4d\r",event.key.keysym.scancode);
+        printf("%4d\r", event.key.keysym.scancode);
         if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)
         {
           if (g_select_SheetIndex > 0)
