@@ -66,3 +66,69 @@ SDL_Texture *tDE_util_loadTexture(tDE_S_Core *pCore,const char *filename)
   SDL_FreeSurface(surface);
   return pTex;
 }
+
+SDL_bool tDE_util_parseSheet(char *szStr, tDE_S_SheetData *pData)
+{
+
+  // FILE *fp = fopen("../res/tanks/sheet_tanks.xml", "rt");
+  
+  // char *szStr;
+
+  char *szToken = strtok(szStr, " ");
+  if (!strcmp(szToken, "\t<SubTexture"))
+  {
+    static char _szBuf[5][256];
+    //name
+    szToken = strtok(NULL, " ");
+    strcpy(_szBuf[0], szToken);
+    //x
+    szToken = strtok(NULL, " ");
+    strcpy(_szBuf[1], szToken);
+    //y
+    szToken = strtok(NULL, " ");
+    strcpy(_szBuf[2], szToken);
+    //w
+    szToken = strtok(NULL, " ");
+    strcpy(_szBuf[3], szToken);
+    //h
+    szToken = strtok(NULL, " ");
+    strcpy(_szBuf[4], szToken);
+
+    //name 파싱
+    szToken = strtok(_szBuf[0], "=");
+    szToken = strtok(NULL, ".");
+    strcpy(_szBuf[0], szToken + 1);
+    //printf("%s\n", _szBuf[0]);
+    strcpy(pData->szName,_szBuf[0]);
+
+    //x 파싱
+    szToken = strtok(_szBuf[1], "\"");
+    szToken = strtok(NULL, "\"");
+    // strcpy(_szBuf[1],szToken+1);
+    // printf("x:%d\n", atoi(szToken));
+    pData->m_area.x = atoi(szToken);
+
+    //y 파싱
+    szToken = strtok(_szBuf[2], "\"");
+    szToken = strtok(NULL, "\"");
+    // strcpy(_szBuf[1],szToken+1);
+    // printf("y:%d\n", atoi(szToken));
+    pData->m_area.y = atoi(szToken);
+
+    //w
+    szToken = strtok(_szBuf[3], "\"");
+    szToken = strtok(NULL, "\"");
+    // strcpy(_szBuf[1],szToken+1);
+    // printf("w:%d\n", atoi(szToken));
+    pData->m_area.w = atoi(szToken);
+
+    //h
+    szToken = strtok(_szBuf[4], "\"");
+    szToken = strtok(NULL, "\"");
+    pData->m_area.h = atoi(szToken);
+    return SDL_TRUE;
+  }
+  return SDL_FALSE;
+
+  //fclose(fp);
+}
