@@ -15,6 +15,9 @@ tDE_S_Core *tDE_setup_1(const char *szTitle, int window_width, int window_height
                                    SDL_WINDOWPOS_CENTERED,
                                    SDL_WINDOWPOS_CENTERED,
                                    window_width, window_height, flags);
+  pCore->m_ScreenWidth = window_width;
+  pCore->m_ScreenHeight = window_height;
+  
   pCore->m_pRender = SDL_CreateRenderer(pCore->m_pWin, -1, SDL_RENDERER_ACCELERATED);
   if (!IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)
   {
